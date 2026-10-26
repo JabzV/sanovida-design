@@ -60,8 +60,10 @@ export function getPlan(id: PlanId) {
   return plans.find((p) => p.id === id)!;
 }
 
-export function formatMXN(value: number, locale: string) {
-  return new Intl.NumberFormat(locale === "en" ? "en-US" : "es-MX", {
+/* Both locales print "$1,990" (the page adds "MXN" after it), as the reference does;
+   en-US formatting would give "MX$1,990", which breaks the price lines on phones. */
+export function formatMXN(value: number) {
+  return new Intl.NumberFormat("es-MX", {
     style: "currency",
     currency: "MXN",
     maximumFractionDigits: 0,

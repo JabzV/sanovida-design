@@ -39,4 +39,8 @@ npm run build && npm start
 | Styles and design tokens | `app/globals.css` |
 | Images | `public/images/` (any missing file shows a labelled placeholder) |
 
+## Phones
+
+Below 768px the page follows `references/Landing Page/Moblie View` (1–5): the same multi-column compositions as the desktop, drawn for a **400px-wide screen** and zoomed to the real viewport with CSS `zoom` (320px → 0.8×, 390px → 0.975×, 430px → 1.075×, capped at 1.3× from 520px). Every phone therefore shows the same picture. All phone rules live in the `@media (max-width: 767px)` block at the end of `app/globals.css`; elements that exist only in the phone layout (extra phones in the fan, the product close-ups, the pay strip, the mobile trust row) carry the `m-only` class and are hidden from 768px up.
+
 Checkout is a full UI with a **mock submit**. No payment gateway is connected yet; `onSubmit` in `components/Checkout.tsx` is where one goes. The WhatsApp number, email and support hours in `lib/catalog.ts` are placeholders.

@@ -5,7 +5,7 @@ import { BoxMock } from "../BoxMock";
 import { Media } from "../Media";
 import { Phone } from "../PhoneScreen";
 import { useSite } from "../SiteContext";
-import { BuyButton, Eyebrow, TrustRow } from "../Ui";
+import { BuyButton, Eyebrow, HandNote, TrustRow } from "../Ui";
 
 const FEATURE_ICONS = { progress: Scale, nutrition: Apple, workouts: Dumbbell, measures: Ruler, reminders: Bell, charts: BarChart3 } as const;
 const STEP_ICONS = [ShoppingCart, Mail, Smartphone];
@@ -30,6 +30,8 @@ export function AppTools() {
           <Phone screen="nutrition" className="phone--sm phonefan__a" />
           <Phone screen="progress" className="phone--sm phonefan__b" />
           <Phone screen="workouts" className="phone--sm phonefan__c" />
+          {/* Phones only: the hand-written note beside the fan (mobile reference 4). */}
+          <HandNote lines={a.handLines} className="phonefan__hand m-only" />
         </div>
 
         <ul className="fcards">

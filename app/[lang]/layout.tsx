@@ -40,6 +40,9 @@ export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Prom
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
   colorScheme: "light",
+  /* Phones render the page at a fixed 400px design width and zoom it to the
+     screen, so form fields sit below 16px; this stops iOS zooming into them. */
+  maximumScale: 1,
 };
 
 export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {

@@ -54,7 +54,7 @@ async function SubPageBody({ params }: Pick<PageProps<"/[lang]/[slug]">, "params
           <DosageGrid />
           <Quality />
           <Confidence />
-          <CtaBand eyebrow={t.product.closing.eyebrow} title={t.product.closing.title} lead={t.product.closing.lead} cta={t.product.closing.cta} image="F1" alt={t.alt.closing} centered />
+          <CtaBand eyebrow={t.product.closing.eyebrow} title={t.product.closing.title} lead={t.product.closing.lead} cta={t.product.closing.cta} image="F1" alt={t.alt.closing} centered mobileTrust />
         </>
       )}
 

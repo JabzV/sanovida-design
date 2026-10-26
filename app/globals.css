@@ -3856,6 +3856,13 @@ em.accent {
   box-shadow: var(--shadow-2);
 }
 
+/* The two halves of the summary (order, then totals) keep the card's rhythm. */
+.summary__order,
+.summary__pay {
+  display: grid;
+  gap: 16px;
+}
+
 .summary__title {
   display: flex;
   align-items: center;
@@ -4673,91 +4680,11 @@ em.accent {
   }
 }
 
-@media (max-width: 639px) {
-  .ladder__steps {
-    height: 210px;
-    gap: 6px;
-  }
-
-  .ladder__name {
-    display: none;
-  }
-
-  .ladder__start {
-    top: -26px;
-    font-size: 0.625rem;
-  }
-
-  .fields--card {
-    grid-template-columns: 1fr;
-    padding-left: 16px;
-  }
-
-  .header__secure,
-  .header__secure span {
-    font-size: 0;
-  }
-
-  .header__secure svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .logo__mark {
-    width: 38px;
-    height: 38px;
-  }
-
-  .logo__name {
-    font-size: 1.5rem;
-  }
-
-  .logo__tag {
-    font-size: 0.625rem;
-  }
-
-  .method__row {
-    grid-template-columns: auto 1fr;
-  }
-
-  .method__logo {
-    grid-column: 2;
-  }
-
-  .phonefan {
-    height: 420px;
-    margin-inline: calc(var(--gutter) * -1);
-    overflow: hidden;
-  }
-
-  .phonefan .phone--sm {
-    width: 190px;
-    height: 390px;
-  }
-
-  .phonefan__a {
-    transform: translateX(-58px) scale(0.78);
-  }
-
-  .phonefan__c {
-    transform: translateX(58px) scale(0.78);
-  }
-
-  .phero .media--pending .media__tag {
-    bottom: 76px;
-  }
-
-  .cocards {
-    grid-template-columns: 1fr;
-  }
-
-  .boxstack {
-    max-width: 100%;
-    overflow: hidden;
-  }
-}
-
 @media (min-width: 768px) {
+  .m-only {
+    display: none !important;
+  }
+
   .phero {
     /* Track the hero photo's aspect (16:9, head at the top edge, boxes at the
        bottom) so cover never crops it to a slice, but never taller than the screen.
@@ -5151,6 +5078,2648 @@ em.accent {
   }
 }
 
+/* ================================================================== */
+/* Phones (mobile references 1–5)                                      */
+/*                                                                      */
+/* The phone layouts are drawn for a 400px-wide screen and keep the     */
+/* desktop's multi-column compositions at a small size. The page is     */
+/* laid out at exactly 400px and zoomed to the real viewport, so every  */
+/* phone shows the same picture (320px → 0.8×, 390px → 0.975×, 430px →  */
+/* 1.075×). Above 520px the zoom stops at 1.3× and the grid stretches.   */
+/* ================================================================== */
+
+@media (max-width: 767px) {
+  :root {
+    --z: 0.9;
+    --gutter: 16px;
+    --header-h: 56px;
+    --radius: 10px;
+    --radius-lg: 12px;
+  }
+
+  @media (min-width: 380px) {
+    :root {
+      --z: 0.975;
+    }
+  }
+
+  @media (min-width: 420px) {
+    :root {
+      --z: 1.075;
+    }
+  }
+
+  @media (min-width: 480px) {
+    :root {
+      --z: 1.2;
+    }
+  }
+
+  @media (min-width: 540px) {
+    :root {
+      --z: 1.3;
+    }
+  }
+
+  @supports (zoom: calc(100vw / 1440px)) {
+    :root {
+      --z: min(100vw / 400px, 1.3);
+    }
+  }
+
+  .d-only {
+    display: none !important;
+  }
+
+  .section {
+    padding-block: 24px;
+  }
+
+  .section--tight {
+    padding-block: 20px;
+  }
+
+  /* Type ------------------------------------------------------------ */
+
+  .eyebrow {
+    margin-bottom: 6px;
+    font-size: 8px;
+    letter-spacing: 0.24em;
+  }
+
+  .h2 {
+    font-size: 22px;
+  }
+
+  .h3 {
+    font-size: 17px;
+  }
+
+  .section-head {
+    gap: 3px;
+    margin-bottom: 14px;
+  }
+
+  .section-head p:not(.eyebrow) {
+    font-size: 10px;
+  }
+
+  .caption {
+    font-size: 8px;
+  }
+
+  /* Buttons, pills, rings ------------------------------------------- */
+
+  .btn {
+    --h: 36px;
+    gap: 7px;
+    padding: 0 18px;
+    font-size: 12.5px;
+  }
+
+  .btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .btn--lg {
+    --h: 40px;
+    padding: 0 26px;
+    font-size: 13.5px;
+  }
+
+  .btn--sm {
+    --h: 30px;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+
+  .pill {
+    padding: 2px 8px;
+    font-size: 8px;
+  }
+
+  .ringrow {
+    gap: 6px 8px;
+  }
+
+  .ringitem {
+    gap: 5px;
+  }
+
+  .ringitem__label {
+    font-size: 7.5px;
+    line-height: 1.2;
+  }
+
+  .ring {
+    width: 24px;
+    height: 24px;
+    box-shadow: inset 0 0 0 1.2px currentColor;
+  }
+
+  .ring svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .ringrow--stack {
+    gap: 6px 12px;
+  }
+
+  .ringrow--stack .ringitem {
+    gap: 4px;
+  }
+
+  .ringrow--stack .ringitem__label {
+    font-size: 7px;
+  }
+
+  .trustrow {
+    gap: 4px 10px;
+  }
+
+  .trustrow li {
+    gap: 4px;
+    font-size: 7.5px;
+  }
+
+  .trustrow svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .stores {
+    gap: 5px;
+  }
+
+  .store {
+    height: 28px;
+    gap: 5px;
+    padding: 0 9px 0 7px;
+    border-radius: 6px;
+  }
+
+  .store svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .store span {
+    font-size: 9.5px;
+  }
+
+  .store small {
+    font-size: 5.5px;
+  }
+
+  .leaves {
+    width: 32px;
+    height: 20px;
+  }
+
+  .handnote .hand {
+    font-size: 28px;
+    transform: rotate(-7deg);
+  }
+
+  .handnote__swash {
+    width: 112px;
+    margin: 2px 0 6px 6px;
+  }
+
+  .handnote__note {
+    max-width: 140px;
+    padding-left: 18px;
+    font-size: 11.5px;
+    line-height: 1.25;
+  }
+
+  .media__tag {
+    padding: 4px 7px;
+    font-size: 7px;
+    border-radius: 6px;
+  }
+
+  .media__tag small {
+    font-size: 6px;
+  }
+
+  /* Header ---------------------------------------------------------- */
+
+  .header {
+    /* Part of the zoomed design on phones, so it scales with the page. */
+    zoom: 1;
+  }
+
+  .header__inner {
+    max-width: none;
+    gap: 10px;
+    padding-inline: var(--gutter);
+  }
+
+  .logo__img {
+    height: 34px;
+  }
+
+  .logo__mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo__name {
+    font-size: 1.25rem;
+  }
+
+  .logo__tag {
+    font-size: 0.5rem;
+  }
+
+  .header__end {
+    gap: 8px;
+  }
+
+  .lang {
+    gap: 6px;
+    font-size: 11.5px;
+  }
+
+  .lang a {
+    padding: 6px 1px;
+  }
+
+  .lang span {
+    height: 11px;
+  }
+
+  .header__secure {
+    gap: 4px;
+    font-size: 10px;
+  }
+
+  .header__secure svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .header__toggle {
+    width: 36px;
+    height: 36px;
+    margin-right: -8px;
+  }
+
+  .header__toggle svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sheet {
+    gap: 18px;
+    padding: 14px var(--gutter) 28px;
+  }
+
+  .sheet nav a {
+    padding: 11px 0;
+    font-size: 18px;
+  }
+
+  /* Hero (all pages) ------------------------------------------------ */
+
+  .phero {
+    min-height: 0;
+  }
+
+  /* Crop so the woman sits centre-right between the copy and the note, with the
+     0.8 mg box on the ledge at the bottom-right corner (the 9 mg box falls off). */
+  .phero__photo img {
+    object-position: 27% 50% !important;
+  }
+
+  .phero__bg::after {
+    background: linear-gradient(90deg, rgb(255 255 255 / 0.97) 0%, rgb(255 255 255 / 0.93) 30%, rgb(255 255 255 / 0.72) 45%, rgb(255 255 255 / 0.18) 60%, rgb(255 255 255 / 0) 100%);
+  }
+
+  .phero__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 6px;
+    padding-top: 16px;
+    padding-bottom: 14px;
+  }
+
+  .phero__copy {
+    max-width: 216px;
+  }
+
+  .phero__title {
+    font-size: 24px;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+  }
+
+  .phero__title--xl {
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  .phero__strong {
+    margin-top: 4px;
+    font-size: 15px;
+    line-height: 1.15;
+  }
+
+  .phero__lead {
+    margin-top: 8px;
+    max-width: none;
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  /* Three rings on one line, allowed to run a little past the copy column into
+     the empty space under the note, as in the reference. */
+  .phero .ringrow {
+    flex-wrap: nowrap;
+    gap: 4px 6px;
+    margin-top: 11px;
+    margin-right: -56px;
+  }
+
+  main[data-page="packages"] .phero .ringrow {
+    flex-wrap: wrap;
+  }
+
+  .phero .ringitem {
+    gap: 4px;
+  }
+
+  .phero .ringitem__label {
+    font-size: 7px;
+  }
+
+  .phero .ring {
+    width: 20px;
+    height: 20px;
+  }
+
+  .phero .ring svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .phero__stores {
+    margin-top: 11px;
+  }
+
+  .phero__actions {
+    gap: 8px;
+    margin: 12px 0 8px;
+  }
+
+  .phero__actions .btn--lg {
+    --h: 38px;
+    padding: 0 22px;
+    font-size: 13px;
+  }
+
+  .phero__trust {
+    flex-wrap: nowrap;
+    gap: 4px 7px;
+    margin-top: 8px;
+    margin-right: -56px;
+  }
+
+  .phero__trust li {
+    font-size: 6.8px;
+    white-space: nowrap;
+  }
+
+  .phero__trust svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Narrow and flush right, so it sits beside the woman's head, not on it. */
+  .phero__hand {
+    justify-self: end;
+    justify-items: center;
+    width: 106px;
+    margin-top: 6px;
+    margin-right: -4px;
+    text-align: center;
+  }
+
+  .phero__hand .hand {
+    font-size: 22px;
+    transform: rotate(-8deg);
+    text-shadow: 0 0 8px rgb(255 255 255 / 0.9);
+  }
+
+  .phero__hand .handnote__swash {
+    width: 84px;
+    margin: 4px 0 8px;
+  }
+
+  .phero__hand .handnote__note {
+    max-width: 106px;
+    padding-left: 0;
+    font-size: 10.5px;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #fff,
+      0 0 16px #fff;
+  }
+
+  .phero__footnote {
+    padding: 0 var(--gutter) 8px;
+    font-size: 6.5px;
+    line-height: 1.3;
+  }
+
+  .phero__ledge {
+    display: none;
+  }
+
+  .phero .media--pending .media__tag {
+    bottom: 24px;
+  }
+
+  /* The app hero of mobile reference 4 shows the store badges, not the benefit rings. */
+  main[data-page="app"] .phero .ringrow {
+    display: none;
+  }
+
+  /* The app photo has the woman centre-left and the big phone at the right. */
+  main[data-page="app"] .phero__photo img {
+    object-position: 38% 50% !important;
+  }
+
+  main[data-page="app"] .phero__bg::after {
+    background: linear-gradient(90deg, rgb(255 255 255 / 0.96) 0%, rgb(255 255 255 / 0.88) 34%, rgb(255 255 255 / 0.4) 48%, rgb(255 255 255 / 0.05) 60%, rgb(255 255 255 / 0) 100%);
+  }
+
+  main[data-page="app"] .phero__copy {
+    max-width: 196px;
+  }
+
+  main[data-page="app"] .phero__title {
+    font-size: 22px;
+  }
+
+  /* The product hero of mobile reference 2 ends with the rings. */
+  main[data-page="product"] .phero__actions,
+  main[data-page="product"] .phero__trust {
+    display: none;
+  }
+
+  /* Home: product intro --------------------------------------------- */
+
+  .hprod__grid {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+  }
+
+  .hprod__title {
+    font-size: 21px;
+    line-height: 0.95;
+  }
+
+  .hprod__subtitle {
+    margin-top: 4px;
+    font-size: 12.5px;
+    line-height: 1.15;
+  }
+
+  .hprod__body {
+    margin-top: 7px;
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  .hprod .ringrow--divided {
+    display: none;
+  }
+
+  .boxrow {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px 3px;
+  }
+
+  .boxrow__item {
+    min-width: 0;
+  }
+
+  /* The column is the cell itself, so a wide pill cannot inflate the box image. */
+  .boxrow__link {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+
+  .boxrow__img {
+    aspect-ratio: 0.78;
+  }
+
+  .boxrow__mg {
+    margin-top: 0;
+    font-size: 11px;
+  }
+
+  /* A pill wider than its box spills evenly over both sides (reference 1). */
+  .boxrow .pill {
+    width: max-content;
+    max-width: none;
+    justify-self: center;
+    padding: 2px 5px;
+    font-size: 6.2px;
+    white-space: nowrap;
+  }
+
+  .boxrow__desc {
+    max-width: none;
+    font-size: 6.5px;
+    line-height: 1.25;
+  }
+
+  /* Home: packages teaser ------------------------------------------- */
+
+  .hpack__grid {
+    grid-template-columns: 74px minmax(0, 1fr);
+    gap: 6px;
+    padding-inline: 8px;
+    align-items: start;
+  }
+
+  .hpack__copy .h2 {
+    font-size: 13.5px;
+    line-height: 1.08;
+  }
+
+  .hpack__copy p:not(.eyebrow) {
+    margin-top: 4px;
+    font-size: 8px;
+    line-height: 1.35;
+  }
+
+  .plans--compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .plan--compact {
+    min-width: 0;
+    gap: 4px;
+    padding: 11px 6px 7px;
+    border-radius: 9px;
+  }
+
+  .plan__badge {
+    padding: 2px 7px;
+    font-size: 5.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .plan--compact .plan__name {
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .plan--compact .plan__tag {
+    margin-top: 1px;
+    font-size: 7.5px;
+    line-height: 1.2;
+  }
+
+  .plan__amount--top {
+    font-size: 14.5px;
+  }
+
+  .plan--compact .plan__body {
+    position: relative;
+    gap: 0;
+  }
+
+  /* The packshot tucks into the bottom-right corner behind the features (reference 1). */
+  .plan--compact .plan__img {
+    position: absolute;
+    right: -7px;
+    bottom: -3px;
+    width: 34px;
+    height: 42px;
+    border-radius: 0;
+    background: none;
+    mix-blend-mode: multiply;
+  }
+
+  .plan--compact .plan__img img {
+    transform: scale(1.5);
+  }
+
+  .plan--compact .plan__features {
+    position: relative;
+    z-index: 1;
+    gap: 2px;
+    padding-right: 20px;
+  }
+
+  .plan--compact .plan__features li {
+    gap: 3px;
+    font-size: 6px;
+    line-height: 1.2;
+  }
+
+  /* Three lines beside the packshot, as in the reference card. */
+  .plan--compact .plan__features li:nth-child(n + 4) {
+    display: none;
+  }
+
+  .plan--compact .plan__features svg {
+    width: 8px;
+    height: 8px;
+    margin-top: 0;
+  }
+
+  .plan--compact .btn {
+    --h: 24px;
+    gap: 3px;
+    margin-top: 4px;
+    padding: 0 6px;
+    font-size: 7.5px;
+  }
+
+  .plan--compact .btn svg {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Home: app teaser -------------------------------------------------- */
+
+  .happ__grid {
+    grid-template-columns: 104px minmax(0, 1fr) 96px;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .happ__copy .h2 {
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .happ__copy p:not(.eyebrow) {
+    margin-top: 5px;
+    font-size: 8.3px;
+    line-height: 1.4;
+  }
+
+  .happ__stores {
+    margin-top: 8px;
+    gap: 4px;
+  }
+
+  .happ__stores .store {
+    height: 23px;
+    gap: 4px;
+    padding: 0 6px 0 5px;
+    border-radius: 5px;
+  }
+
+  .happ__stores .store svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .happ__stores .store span {
+    font-size: 7.5px;
+  }
+
+  .happ__stores .store small {
+    font-size: 4.5px;
+  }
+
+  /* Three small phones fanned side by side, the progress screen in front. */
+  .happ__phone {
+    height: 172px;
+    display: grid;
+    place-items: center;
+  }
+
+  .happ__phone::before {
+    inset: 10% -10%;
+  }
+
+  .happ__main {
+    position: relative;
+    z-index: 2;
+    zoom: 0.3;
+  }
+
+  .happ__side {
+    position: absolute;
+    top: 14px;
+    z-index: 1;
+    zoom: 0.27;
+  }
+
+  .happ__side--a {
+    left: -16px;
+  }
+
+  .happ__side--b {
+    right: -16px;
+  }
+
+  .happ__leaf {
+    width: 44px;
+    height: 28px;
+  }
+
+  .happ__leaf--a {
+    top: -8px;
+    left: -10px;
+  }
+
+  .happ__leaf--b {
+    right: -12px;
+    bottom: 2px;
+  }
+
+  .tiles {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .tile {
+    gap: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .tile:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .tile h3 {
+    gap: 6px;
+    font-size: 8px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .tile__icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--leaf);
+    box-shadow: inset 0 0 0 1.2px currentColor;
+  }
+
+  .tile__icon svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .tile p {
+    padding-left: 30px;
+    font-size: 6.5px;
+    line-height: 1.3;
+  }
+
+  .tile__img {
+    display: none;
+  }
+
+  /* Home: how it works ------------------------------------------------ */
+
+  .hhow__grid {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+  }
+
+  .hhow__copy .h2 {
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .hhow__copy p:not(.eyebrow) {
+    margin-top: 4px;
+    font-size: 8.3px;
+    line-height: 1.4;
+  }
+
+  .hhow__hand {
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  .stepsrow--line {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .stepsrow--line li {
+    grid-template-columns: 30px 1fr;
+    gap: 0 5px;
+    padding-right: 0;
+  }
+
+  .stepsrow__ring {
+    width: 30px;
+    height: 30px;
+    box-shadow: inset 0 0 0 1.2px var(--gold);
+  }
+
+  .stepsrow--line .stepsrow__icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .stepsrow__n {
+    font-size: 6.5px;
+    letter-spacing: 0.15em;
+  }
+
+  .stepsrow--line .stepsrow__text {
+    font-size: 6.5px;
+    line-height: 1.3;
+  }
+
+  .stepsrow--line .stepsrow__text b {
+    margin: 1px 0 2px;
+    font-size: 9px;
+    line-height: 1.1;
+  }
+
+  /* CTA band ----------------------------------------------------------- */
+
+  .ctaband {
+    padding-block: 22px 18px;
+  }
+
+  /* The woman at the far left, fading into the band before the copy begins. */
+  .ctaband__bg {
+    inset: 0 auto 0 -28%;
+    width: 62%;
+    mask-image: linear-gradient(90deg, #000 45%, transparent 92%);
+    -webkit-mask-image: linear-gradient(90deg, #000 45%, transparent 92%);
+  }
+
+  .ctaband__bg img {
+    object-position: 50% 0% !important;
+  }
+
+  .ctaband__bg::after {
+    background: linear-gradient(90deg, rgb(255 255 255 / 0.05) 0%, rgb(255 255 255 / 0.25) 60%, rgb(251 247 240 / 0.7) 100%);
+  }
+
+  .ctaband__inner {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-left: 72px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .ctaband__title {
+    font-size: 17px;
+  }
+
+  .ctaband__copy p:not(.eyebrow) {
+    margin-top: 4px;
+    font-size: 8.3px;
+    line-height: 1.4;
+  }
+
+  .ctaband__cta {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .ctaband__cta .btn--lg {
+    --h: 36px;
+    padding: 0 22px;
+    font-size: 13px;
+  }
+
+  .ctaband__trust {
+    justify-content: center;
+    gap: 6px 10px;
+  }
+
+  /* Product: dosage grid ---------------------------------------------- */
+
+  .dgrid .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 0 12px;
+    align-items: end;
+    justify-items: start;
+    max-width: none;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  .dgrid .section-head .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .dgrid .section-head .h2 {
+    font-size: 19px;
+    line-height: 1.05;
+  }
+
+  .dgrid .section-head p:not(.eyebrow) {
+    padding-bottom: 2px;
+    font-size: 8.3px;
+    line-height: 1.4;
+  }
+
+  .dcards {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+
+  .dcard {
+    gap: 3px;
+    padding: 5px 3px 8px;
+    border-radius: 7px;
+  }
+
+  .dcard__img {
+    aspect-ratio: 0.82;
+  }
+
+  .dcard__mg {
+    padding: 0;
+    background: none;
+    font-size: 10.5px;
+    line-height: 1.1;
+  }
+
+  .dcard__name {
+    display: inline-block;
+    max-width: 112%;
+    padding: 2px 5px;
+    border-radius: 999px;
+    background: var(--wash);
+    font-size: 6.2px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .dcard__desc {
+    max-width: none;
+    font-size: 6.5px;
+    line-height: 1.25;
+  }
+
+  .dcard__points,
+  .dcard__cta {
+    display: none;
+  }
+
+  .dgrid__note {
+    margin-top: 10px;
+    font-size: 7.5px;
+  }
+
+  /* Product: quality -------------------------------------------------- */
+
+  .quality__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 4px 10px;
+    align-items: center;
+  }
+
+  .quality__copy {
+    display: contents;
+  }
+
+  .quality__copy .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .quality__copy .h2 {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 17px;
+    line-height: 1.08;
+  }
+
+  .quality__copy p:not(.eyebrow) {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: start;
+    margin-top: 4px;
+    font-size: 8.3px;
+    line-height: 1.4;
+  }
+
+  /* Four reassurances as a 2×2 grid beside the copy (reference 2). */
+  .quality__points {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 0;
+    align-self: center;
+  }
+
+  .quality__point {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 8px 7px;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.85);
+    box-shadow: inset 0 0 0 1px var(--line-soft);
+    font-size: 7px;
+    line-height: 1.3;
+  }
+
+  .quality__ring {
+    width: 24px;
+    height: 24px;
+    box-shadow: inset 0 0 0 1.2px currentColor;
+  }
+
+  .quality__ring svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .quality__scene {
+    display: none;
+  }
+
+  .qdetails {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+  }
+
+  .qdetails__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .qdetails__list li {
+    display: grid;
+    gap: 2px;
+    font-size: 6.5px;
+    line-height: 1.3;
+    color: var(--ink-2);
+  }
+
+  .qdetails__list b {
+    margin-top: 4px;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 1.15;
+    color: var(--gold-ink);
+  }
+
+  .qdetails__img {
+    aspect-ratio: 1.3;
+    border-radius: 8px;
+    box-shadow: var(--shadow-1);
+  }
+
+  .confidence {
+    display: none;
+  }
+
+  /* Packages page ----------------------------------------------------- */
+
+  .ppack {
+    padding-block: 12px 14px;
+  }
+
+  .ppack .wrap {
+    padding-inline: 8px;
+  }
+
+  .ppack__head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .plans--full {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .plans--full .plan {
+    min-width: 0;
+    display: grid;
+    grid-auto-rows: max-content;
+    gap: 5px;
+    padding: 12px 7px 8px;
+    border-radius: 9px;
+  }
+
+  .plan--popular {
+    transform: none;
+  }
+
+  .plans--full .plan__head {
+    order: 1;
+  }
+
+  .plans--full .plan__name {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .plans--full .plan__tag {
+    margin-top: 2px;
+    font-size: 7.5px;
+    line-height: 1.2;
+  }
+
+  /* Price under the name: amount, then the saving pill and the old price side by side. */
+  .plans--full .plan__price {
+    order: 2;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 2px 5px;
+    margin: 0;
+    text-align: left;
+  }
+
+  .plans--full .plan__amount {
+    grid-column: 1 / -1;
+    order: -1;
+    font-size: 15.5px;
+  }
+
+  .plans--full .plan__amount span {
+    font-size: 0.5em;
+  }
+
+  .plans--full .plan__save {
+    gap: 2px;
+    margin: 0;
+    padding: 2px 6px;
+    font-size: 5.5px;
+    letter-spacing: 0.04em;
+  }
+
+  .plans--full .plan__save svg {
+    width: 7px;
+    height: 7px;
+  }
+
+  .plans--full .plan__before {
+    margin: 0;
+    font-size: 6.5px;
+  }
+
+  .plans--full .plan__body {
+    order: 3;
+    gap: 4px;
+  }
+
+  .plans--full .plan__img {
+    height: 74px;
+    border-radius: 6px;
+  }
+
+  .plans--full .plan__img img {
+    transform: scale(1.45);
+  }
+
+  .plans--full .plan__features {
+    gap: 2px;
+  }
+
+  .plans--full .plan__features li {
+    gap: 3px;
+    font-size: 6.3px;
+    line-height: 1.2;
+  }
+
+  .plans--full .plan__features svg {
+    width: 8px;
+    height: 8px;
+    margin-top: 0;
+  }
+
+  .plans--full .plan > .btn {
+    order: 4;
+    --h: 26px;
+    gap: 3px;
+    margin-top: 2px;
+    padding: 0 6px;
+    font-size: 8px;
+  }
+
+  .plans--full .plan > .btn svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .plans--full .plan__trust {
+    display: none;
+  }
+
+  .aband {
+    padding-block: 0 12px;
+    background: var(--cream);
+  }
+
+  .aband__list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: var(--paper);
+    box-shadow: var(--shadow-1);
+  }
+
+  .aband__list li {
+    gap: 5px;
+  }
+
+  .aband__list li + li {
+    padding-left: 5px;
+    border-left: 1px solid var(--line-soft);
+  }
+
+  .aband__list svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .aband__list span {
+    font-size: 6px;
+    line-height: 1.25;
+  }
+
+  .aband__list b {
+    font-size: 6.8px;
+  }
+
+  /* App beside the results, on the cream band, then the payment strip (reference 3). */
+  .lifeband {
+    padding-block: 14px 12px;
+    background: var(--cream);
+  }
+
+  .lifeband__bg {
+    inset: 0 0 0 auto;
+    width: 46%;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%);
+  }
+
+  .lifeband__bg img {
+    object-position: 50% 10% !important;
+  }
+
+  .lifeband__bg::after {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.55) 0%, rgb(255 255 255 / 0.2) 50%, rgb(255 255 255 / 0.5) 100%);
+  }
+
+  .lifeband__inner {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    gap: 2px 10px;
+    align-items: start;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .lifeband__phone {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    align-self: center;
+    zoom: 0.38;
+    filter: drop-shadow(0 10px 14px rgb(29 59 47 / 0.25));
+  }
+
+  .lifeband__app {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    padding-top: 6px;
+  }
+
+  .lifeband__apptitle {
+    font-size: 14px;
+    line-height: 1.1;
+  }
+
+  .lifeband__app p {
+    margin-top: 4px;
+    font-size: 7.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+
+  .lifeband__tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 6px;
+    margin-top: 8px;
+  }
+
+  .lifeband__tools li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 6.5px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .lifeband__tools svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    color: var(--leaf);
+  }
+
+  .lifeband__title {
+    grid-column: 3;
+    grid-row: 1;
+    padding-top: 10px;
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .lifeband__items {
+    grid-column: 3;
+    grid-row: 2;
+    justify-content: flex-start;
+    gap: 6px 8px;
+    margin-top: 6px;
+  }
+
+  .lifeband__items li {
+    gap: 2px;
+    font-size: 6.5px;
+    line-height: 1.2;
+  }
+
+  .lifeband__items svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .lifeband__hand {
+    grid-column: 3;
+    grid-row: 3;
+    align-self: end;
+    justify-self: end;
+    margin-top: 10px;
+  }
+
+  .lifeband__hand .hand {
+    font-size: 19px;
+  }
+
+  .lifeband__hand .handnote__swash {
+    width: 80px;
+    margin-top: 0;
+  }
+
+  .paystrip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 8px 12px;
+    border-radius: 9px;
+    background: var(--paper);
+    box-shadow: var(--shadow-1);
+    font-size: 7.5px;
+    color: var(--ink);
+  }
+
+  .paystrip > svg {
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+    border-radius: 50%;
+    background: var(--leaf-wash);
+    color: var(--leaf);
+    flex: none;
+  }
+
+  .paystrip__logos {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .paystrip .cards {
+    gap: 4px;
+  }
+
+  .paystrip .cards > span {
+    height: 16px;
+    min-width: 26px;
+    font-size: 7px;
+  }
+
+  .paystrip .cards__mc i {
+    width: 9px;
+    height: 9px;
+  }
+
+  .paystrip .wordlogo--pp {
+    font-size: 10px;
+  }
+
+  /* App page ------------------------------------------------------------ */
+
+  .atools {
+    padding-block: 14px 16px;
+  }
+
+  .atools__grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .atools__copy {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .fcards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px 8px;
+  }
+
+  .fcard {
+    grid-template-columns: 30px 1fr;
+    gap: 2px 6px;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .fcard__icon {
+    grid-row: span 2;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    border-radius: 50%;
+    background: #f7f1e6;
+    box-shadow: none;
+    color: var(--leaf);
+  }
+
+  .fcard--nutrition .fcard__icon,
+  .fcard--workouts .fcard__icon,
+  .fcard--measures .fcard__icon,
+  .fcard--reminders .fcard__icon {
+    color: var(--leaf);
+  }
+
+  .fcard__icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .fcard h3 {
+    font-size: 9px;
+    line-height: 1.15;
+  }
+
+  .fcard p {
+    font-size: 6.5px;
+    line-height: 1.3;
+  }
+
+  /* The fan sits left of centre so the hand note has the right edge to itself. */
+  .phonefan {
+    position: relative;
+    height: 236px;
+    margin: 6px 0 0;
+    padding-right: 84px;
+    overflow: visible;
+  }
+
+  .phonefan .phone--sm {
+    width: 250px;
+    height: 510px;
+    zoom: 0.46;
+  }
+
+  .phonefan__a {
+    transform: translateX(-150px) scale(0.86);
+  }
+
+  .phonefan__c {
+    transform: translateX(150px) scale(0.86);
+  }
+
+  .phonefan__hand {
+    position: absolute;
+    right: -4px;
+    top: 36px;
+    width: 88px;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .phonefan__hand .hand {
+    font-size: 18px;
+  }
+
+  .phonefan__hand .handnote__swash {
+    width: 72px;
+  }
+
+  .asteps {
+    padding-block: 14px;
+  }
+
+  .asteps__grid {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+  }
+
+  .asteps__copy .h2 {
+    font-size: 16px;
+    line-height: 1.08;
+  }
+
+  .asteps__copy p:not(.eyebrow) {
+    margin-top: 4px;
+    font-size: 8.3px;
+    line-height: 1.4;
+  }
+
+  .stepsrow--card {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .stepsrow--card li {
+    grid-template-columns: 22px 1fr;
+    gap: 2px 4px;
+    align-items: center;
+  }
+
+  .stepsrow__num {
+    grid-row: auto;
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+
+  .stepsrow--card .stepsrow__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .stepsrow--card .stepsrow__text {
+    grid-column: 1 / -1;
+    font-size: 6.5px;
+    line-height: 1.3;
+  }
+
+  .stepsrow--card .stepsrow__text b {
+    font-size: 8.5px;
+  }
+
+  .aclose {
+    padding-block: 16px 18px;
+  }
+
+  .aclose__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 3px 10px;
+    align-items: center;
+  }
+
+  .aclose__copy {
+    display: contents;
+  }
+
+  .aclose__copy .eyebrow {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    margin: 0;
+  }
+
+  .aclose__copy .h2 {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 15px;
+    line-height: 1.08;
+  }
+
+  .aclose__copy p:not(.eyebrow) {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: start;
+    margin: 2px 0 0;
+    font-size: 7.5px;
+    line-height: 1.4;
+  }
+
+  .aclose__img {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    border-radius: 10px;
+    box-shadow:
+      0 1px 3px rgb(29 59 47 / 0.05),
+      0 16px 30px -22px rgb(29 59 47 / 0.4);
+  }
+
+  .aclose__trio .boxmock {
+    width: min(var(--w), 60px);
+  }
+
+  .aclose__copy > .btn {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: center;
+    --h: 38px;
+    margin-top: 12px;
+    padding: 0 30px;
+    font-size: 13px;
+  }
+
+  .aclose__copy .trustrow {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    justify-content: center;
+    gap: 4px 12px;
+    margin-top: 8px;
+  }
+
+  /* Checkout ----------------------------------------------------------- */
+
+  .cohero {
+    background: var(--paper);
+  }
+
+  .cohero__bg {
+    display: none;
+  }
+
+  .cohero__inner {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 10px var(--gutter) 4px;
+  }
+
+  .cohero__title,
+  .cohero__lead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .cohero__hand {
+    display: none;
+  }
+
+  /* Three numbered circles on one line, labels underneath (reference 5). */
+  .stepper {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin: 4px auto 0;
+    width: 260px;
+    max-width: 100%;
+  }
+
+  .stepper::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 17%;
+    right: 17%;
+    height: 1.5px;
+    background: var(--line);
+  }
+
+  .stepper li {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .stepper li + li::before {
+    display: none;
+  }
+
+  .stepper__num {
+    position: relative;
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .stepper__num svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .stepper__text {
+    font-size: 0;
+    text-align: center;
+  }
+
+  .stepper__text b {
+    font-size: 8.5px;
+  }
+
+  .checkout {
+    padding-block: 8px 18px;
+  }
+
+  /* One column: order card, the three panels, totals and button, trust, help. */
+  .checkout__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .checkout__form,
+  .checkout__side,
+  .summary {
+    display: contents;
+  }
+
+  .summary__order {
+    order: 1;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 6px 10px;
+    align-items: center;
+    padding: 10px 10px 9px;
+    border-radius: 10px;
+    background: var(--paper);
+    box-shadow:
+      inset 0 0 0 1px var(--line-soft),
+      var(--shadow-1);
+  }
+
+  .summary__title {
+    grid-column: 1 / -1;
+    gap: 0;
+    font-family: var(--font-sans);
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-ink);
+  }
+
+  .summary__cart {
+    display: none;
+  }
+
+  .summary__img {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    height: 108px;
+    border-radius: 8px;
+    background: none;
+  }
+
+  .summary__item {
+    grid-column: 2;
+    gap: 8px;
+  }
+
+  .summary__pkg {
+    font-size: 12.5px;
+  }
+
+  .summary__dose {
+    font-size: 8px;
+  }
+
+  .summary__boxes {
+    font-size: 7px;
+  }
+
+  .summary__right {
+    gap: 3px;
+  }
+
+  .summary__right .plan__badge--inline {
+    padding: 2px 6px;
+    font-size: 5.5px;
+  }
+
+  .summary__price {
+    font-size: 13px;
+  }
+
+  .summary__features {
+    grid-column: 2;
+    gap: 3px;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .summary__features li {
+    gap: 4px;
+    font-size: 7px;
+    line-height: 1.3;
+  }
+
+  .summary__features svg {
+    width: 10px;
+    height: 10px;
+    margin-top: 0;
+  }
+
+  .summary__pick {
+    grid-column: 1 / -1;
+  }
+
+  .summary__pick legend {
+    margin-bottom: 3px;
+    font-size: 7px;
+  }
+
+  .seg {
+    gap: 4px;
+  }
+
+  .seg__opt span {
+    min-height: 24px;
+    border-radius: 6px;
+    font-size: 7.5px;
+  }
+
+  .summary__pay {
+    order: 5;
+    gap: 8px;
+    padding: 10px 10px 9px;
+    border-radius: 10px;
+    background: var(--paper);
+    box-shadow:
+      inset 0 0 0 1px var(--line-soft),
+      var(--shadow-1);
+  }
+
+  .summary__pay::before {
+    content: attr(data-title);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    color: var(--rose);
+  }
+
+  .summary__totals {
+    gap: 4px;
+    font-size: 8px;
+  }
+
+  .summary__total {
+    margin-top: 2px;
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+
+  .summary__total dt {
+    font-size: 11px;
+  }
+
+  .summary__total dd {
+    font-size: 14px;
+  }
+
+  .summary__saving {
+    gap: 5px;
+    padding: 6px 9px;
+    border-radius: 7px;
+    font-size: 7px;
+  }
+
+  .summary__saving svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .summary__error {
+    padding: 6px 9px;
+    font-size: 7.5px;
+  }
+
+  .summary__pay .btn--lg {
+    --h: 38px;
+    font-size: 13px;
+  }
+
+  .summary__terms {
+    font-size: 6.5px;
+  }
+
+  .checkout__form .panel:nth-of-type(1) {
+    order: 2;
+  }
+
+  .checkout__form .panel:nth-of-type(2) {
+    order: 3;
+  }
+
+  .checkout__form .panel:nth-of-type(3) {
+    order: 4;
+  }
+
+  .coband {
+    display: none;
+  }
+
+  .cocards {
+    order: 6;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 6px 2px 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .cocards li {
+    gap: 4px;
+    align-items: center;
+  }
+
+  .cocards svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .cocards span {
+    font-size: 5.8px;
+    line-height: 1.25;
+  }
+
+  .cocards b {
+    font-size: 6.5px;
+  }
+
+  .help {
+    order: 8;
+  }
+
+  .panel {
+    padding: 10px 10px 11px;
+    border-radius: 10px;
+  }
+
+  .panel__head {
+    gap: 8px;
+    margin-bottom: 9px;
+  }
+
+  .panel__head > div {
+    display: flex;
+    flex: 1;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .panel__icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .panel__icon svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .panel__title {
+    font-size: 13px;
+  }
+
+  .panel__lead {
+    font-size: 6.8px;
+    text-align: right;
+  }
+
+  .fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .fields--ship {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .fields--ship .field {
+    grid-column: span 2;
+  }
+
+  .fields--ship .field--wide {
+    grid-column: span 4;
+  }
+
+  .field {
+    gap: 3px;
+  }
+
+  .field label {
+    font-size: 7.5px;
+  }
+
+  .field__control {
+    min-height: 30px;
+    border-radius: 6px;
+  }
+
+  .field input,
+  .field select {
+    height: 30px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .field select {
+    padding-right: 22px;
+  }
+
+  .field__control--select::after {
+    right: 9px;
+    width: 5px;
+    height: 5px;
+    transform: translateY(-2px) rotate(45deg);
+  }
+
+  .field__prefix {
+    gap: 4px;
+    padding: 0 6px 0 8px;
+    font-size: 9.5px;
+  }
+
+  .flag {
+    width: 13px;
+    height: 9px;
+  }
+
+  .field__icon {
+    padding-right: 8px;
+  }
+
+  .field__icon svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .field__error {
+    font-size: 7px;
+  }
+
+  .check {
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 7.5px;
+  }
+
+  .check input {
+    width: 13px;
+    height: 13px;
+    margin-top: 1px;
+    accent-color: var(--gold);
+  }
+
+  /* Three payment methods side by side; the card fields open under all three. */
+  .methods {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .method {
+    display: contents;
+  }
+
+  .method__row {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    justify-items: center;
+    padding: 12px 5px 8px;
+    border-radius: 8px;
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px #ddd2c0;
+    text-align: center;
+    transition: box-shadow 0.2s;
+  }
+
+  .method--on .method__row {
+    box-shadow: inset 0 0 0 1.5px var(--gold);
+  }
+
+  .method__row:has(input:focus-visible) {
+    outline: 2px solid var(--rose);
+    outline-offset: 2px;
+  }
+
+  .method__radio {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .method--on .method__radio {
+    box-shadow:
+      inset 0 0 0 1px var(--gold),
+      inset 0 0 0 2.5px #fff,
+      inset 0 0 0 6px var(--gold);
+  }
+
+  .method__text {
+    line-height: 1.25;
+  }
+
+  .method__text b {
+    font-size: 7.5px;
+  }
+
+  .method__text small {
+    font-size: 6px;
+  }
+
+  .method__logo {
+    grid-column: auto;
+  }
+
+  .cards {
+    gap: 3px;
+  }
+
+  .cards > span {
+    height: 14px;
+    min-width: 24px;
+    padding: 0 3px;
+    font-size: 6px;
+  }
+
+  .cards__mc i {
+    width: 8px;
+    height: 8px;
+  }
+
+  .wordlogo {
+    font-size: 10px;
+  }
+
+  .wordlogo--mp {
+    font-size: 8.5px;
+  }
+
+  .methods__note {
+    grid-column: 1 / -1;
+    font-size: 7px;
+  }
+
+  .fields--card {
+    order: 10;
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    padding: 4px 0 0;
+  }
+
+  .fields--card .field--wide {
+    grid-column: 1 / -1;
+  }
+
+  /* Help as a band with the woman at the left (reference 5). */
+  .help {
+    position: relative;
+    overflow: hidden;
+    gap: 2px;
+    padding: 12px 12px 12px 96px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .help::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 120px;
+    background: url("/images/f1-closing-home.jpg") 48% 8% / cover no-repeat;
+    mask-image: linear-gradient(90deg, #000 45%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 45%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .help > * {
+    position: relative;
+  }
+
+  .help__title {
+    font-size: 14px;
+  }
+
+  .help__lead {
+    font-size: 7.5px;
+  }
+
+  .help__cta {
+    margin-top: 8px;
+  }
+
+  .help__list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+
+  .help__list li {
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .help__list svg {
+    width: 20px;
+    height: 20px;
+    padding: 4px;
+  }
+
+  .help__list span {
+    font-size: 6px;
+    line-height: 1.25;
+    text-align: left;
+  }
+
+  .help__list b {
+    font-size: 6.5px;
+  }
+
+  .done {
+    gap: 10px;
+    padding: 22px 14px;
+    border-radius: 16px;
+  }
+
+  .done__icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .done__title {
+    font-size: 20px;
+  }
+
+  .done__lead,
+  .done__order,
+  .done__next {
+    font-size: 9px;
+  }
+
+  .done__next {
+    padding: 12px 14px;
+  }
+
+  .done__next h3 {
+    font-size: 12px;
+  }
+
+  /* How it works and FAQ pages (no phone reference; same scale) ------ */
+
+  .journey__head p,
+  .ritual__copy > p,
+  .ladder__copy > p,
+  .faqhero__lead,
+  .faq__grouphead p,
+  .faq__answer p,
+  .honest__list p,
+  .journey__body,
+  .ritual__moments span:last-child {
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  .journey__path {
+    gap: 18px;
+  }
+
+  .journey__path::before {
+    left: 17px;
+  }
+
+  .journey__phase {
+    gap: 3px;
+    padding-left: 48px;
+  }
+
+  .journey__ring {
+    width: 36px;
+    height: 36px;
+  }
+
+  .journey__ring svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .journey__when {
+    font-size: 7px;
+  }
+
+  .journey__title {
+    margin-top: 2px;
+    font-size: 14px;
+  }
+
+  .journey__tip {
+    font-size: 7.5px;
+  }
+
+  .ritual__grid {
+    gap: 18px;
+  }
+
+  .ritual__moments {
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .ritual__moments li {
+    grid-template-columns: 76px 1fr;
+    gap: 1px 10px;
+    padding-bottom: 10px;
+  }
+
+  .ritual__time {
+    font-size: 8px;
+  }
+
+  .ritual__moments b {
+    font-size: 11px;
+  }
+
+  .ritual__note {
+    gap: 6px;
+    margin-top: 12px;
+    padding: 8px 10px;
+    font-size: 8px;
+  }
+
+  .ritual__scene {
+    min-height: 0;
+    height: 300px;
+  }
+
+  .ritual__scene .phone {
+    zoom: 0.5;
+  }
+
+  .ritual__box {
+    width: 92px;
+  }
+
+  .ritual__leaf {
+    width: 70px;
+    height: 44px;
+  }
+
+  .ladder__grid {
+    gap: 18px;
+  }
+
+  .ladder__steps {
+    height: 170px;
+    gap: 6px;
+  }
+
+  .ladder__mg {
+    font-size: 10px;
+  }
+
+  .ladder__name {
+    font-size: 6px;
+  }
+
+  .ladder__start {
+    top: -22px;
+    padding: 2px 7px;
+    font-size: 6px;
+  }
+
+  .ladder__link {
+    margin-top: 10px;
+    font-size: 9px;
+  }
+
+  .honest {
+    padding-block: 20px;
+  }
+
+  .honest__list {
+    gap: 12px;
+  }
+
+  .honest__list li {
+    grid-template-columns: 30px 1fr;
+    gap: 1px 10px;
+  }
+
+  .honest__list svg {
+    width: 30px;
+    height: 30px;
+    padding: 7px;
+  }
+
+  .honest__list b {
+    font-size: 11px;
+  }
+
+  .faqhero__inner {
+    gap: 10px;
+    padding-block: 18px 16px;
+  }
+
+  .faqhero__title {
+    font-size: 24px;
+  }
+
+  .faqhero__hand .hand {
+    font-size: 26px;
+  }
+
+  .faqhero__jump {
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .faqhero__jump a {
+    gap: 5px;
+    padding: 6px 9px 6px 7px;
+    font-size: 7.5px;
+  }
+
+  .faqhero__jump svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .faqhero__jump small {
+    font-size: 6px;
+  }
+
+  .faq__grid {
+    gap: 14px;
+  }
+
+  .faq__groups {
+    gap: 12px;
+  }
+
+  .faq__group {
+    padding: 14px 12px;
+  }
+
+  .faq__grouphead {
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .faq__groupicon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .faq__groupicon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .faq__item summary {
+    gap: 10px;
+    padding: 10px 6px;
+    margin-inline: -6px;
+    font-size: 11px;
+  }
+
+  .faq__item summary svg {
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+  }
+
+  .faq__item[open] .faq__answer p {
+    padding-bottom: 12px;
+  }
+
+  .faq__more {
+    gap: 10px;
+  }
+
+  .quick {
+    padding: 12px 14px;
+  }
+
+  .quick__title {
+    font-size: 13px;
+  }
+
+  .quick a {
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .quick__ring {
+    width: 26px;
+    height: 26px;
+  }
+
+  .quick__ring svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .quick__text {
+    font-size: 7px;
+  }
+
+  .quick__text b {
+    font-size: 8.5px;
+  }
+
+  /* Footer --------------------------------------------------------------- */
+
+  .footer {
+    padding: 22px 0 14px;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+    padding-bottom: 12px;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer .logo__markimg {
+    width: 30px;
+  }
+
+  .footer__disclaimer {
+    margin-top: 8px;
+    font-size: 7.5px;
+    line-height: 1.45;
+  }
+
+  .footer__links {
+    gap: 4px;
+    font-size: 8.5px;
+  }
+
+  .footer__base {
+    gap: 3px;
+    padding-top: 10px;
+    font-size: 6.5px;
+  }
+
+  /* Phone frame internals keep their drawn size; only `zoom` shrinks them. */
+  .boxstack {
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -5163,3 +7732,4 @@ em.accent {
     scroll-behavior: auto;
   }
 }
+

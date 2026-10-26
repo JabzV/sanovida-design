@@ -13,7 +13,7 @@ import { BuyButton, TrustRow } from "./Ui";
  * the full card is the packages page (reference 3).
  */
 export function PlanCard({ plan, compact, dosage }: { plan: Plan; compact?: boolean; dosage?: string }) {
-  const { t, locale } = useSite();
+  const { t } = useSite();
   const copy = t.plans[plan.id];
   const common = t.packagesCommon;
   const features = compact ? copy.short : copy.features;
@@ -31,7 +31,7 @@ export function PlanCard({ plan, compact, dosage }: { plan: Plan; compact?: bool
 
       {compact && (
         <p className="plan__amount plan__amount--top">
-          {formatMXN(plan.price, locale)}
+          {formatMXN(plan.price)}
           <span> MXN</span>
         </p>
       )}
@@ -66,12 +66,12 @@ export function PlanCard({ plan, compact, dosage }: { plan: Plan; compact?: bool
             </p>
           )}
           <p className="plan__amount">
-            {formatMXN(plan.price, locale)}
+            {formatMXN(plan.price)}
             <span> MXN</span>
           </p>
           {plan.listPrice > plan.price && (
             <p className="plan__before">
-              <s>{formatMXN(plan.listPrice, locale)} MXN</s>
+              <s>{formatMXN(plan.listPrice)} MXN</s>
             </p>
           )}
         </div>

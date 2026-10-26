@@ -249,6 +249,8 @@ export function Checkout() {
 
               <div className="checkout__side">
                 <aside className="summary" aria-labelledby="summary-title" style={{ "--c": selectedDosage.color } as CSSProperties}>
+                  {/* Two halves so phones can show the order above the form and the totals below it. */}
+                  <div className="summary__order">
                   <h2 id="summary-title" className="display summary__title">
                     <span className="summary__cart" aria-hidden="true">
                       <PackageCheck strokeWidth={1.6} />
@@ -276,7 +278,7 @@ export function Checkout() {
                     <div className="summary__right">
                       {selectedPlan.popular && <span className="plan__badge plan__badge--inline">{t.packagesCommon.popular}</span>}
                       <p className="summary__price">
-                        {formatMXN(selectedPlan.price, locale)} <small>MXN</small>
+                        {formatMXN(selectedPlan.price)} <small>MXN</small>
                       </p>
                     </div>
                   </div>
@@ -316,26 +318,28 @@ export function Checkout() {
                       ))}
                     </div>
                   </fieldset>
+                  </div>
 
+                  <div className="summary__pay" data-title={c.summary.title}>
                   <dl className="summary__totals">
                     <div>
                       <dt>{c.summary.subtotal}</dt>
-                      <dd>{formatMXN(selectedPlan.listPrice, locale)} MXN</dd>
+                      <dd>{formatMXN(selectedPlan.listPrice)} MXN</dd>
                     </div>
                     {discount > 0 && (
                       <div className="is-discount">
                         <dt>{fill(c.summary.discount, { pct: selectedPlan.savePct })}</dt>
-                        <dd>−{formatMXN(discount, locale)} MXN</dd>
+                        <dd>−{formatMXN(discount)} MXN</dd>
                       </div>
                     )}
                     <div>
                       <dt>{c.summary.shipping}</dt>
-                      <dd className="is-free">{SHIPPING_COST ? `${formatMXN(SHIPPING_COST, locale)} MXN` : c.summary.free}</dd>
+                      <dd className="is-free">{SHIPPING_COST ? `${formatMXN(SHIPPING_COST)} MXN` : c.summary.free}</dd>
                     </div>
                     <div className="summary__total">
                       <dt>{c.summary.total}</dt>
                       <dd>
-                        {formatMXN(total, locale)} <small>MXN</small>
+                        {formatMXN(total)} <small>MXN</small>
                       </dd>
                     </div>
                   </dl>
@@ -343,7 +347,7 @@ export function Checkout() {
                   {discount > 0 && (
                     <p className="summary__saving">
                       <Tag aria-hidden="true" strokeWidth={1.8} />
-                      {fill(c.summary.saving, { amount: formatMXN(discount, locale) })}
+                      {fill(c.summary.saving, { amount: formatMXN(discount) })}
                     </p>
                   )}
 
@@ -360,6 +364,7 @@ export function Checkout() {
                   <p className="summary__terms">
                     {c.terms} <a href="#">{c.termsLink}</a> {c.and} <a href="#">{c.privacyLink}</a>.
                   </p>
+                  </div>
                 </aside>
 
                 <ul className="cocards">

@@ -31,7 +31,10 @@ export function AppTeaser() {
 
         <div className="happ__phone">
           <Leaves className="happ__leaf happ__leaf--a" />
-          <Phone screen="progress" className="phone--sm" />
+          {/* Phones only: two more screens fan out behind the main one (mobile reference 1). */}
+          <Phone screen="nutrition" className="phone--sm happ__side happ__side--a m-only" />
+          <Phone screen="progress" className="phone--sm happ__main" />
+          <Phone screen="workouts" className="phone--sm happ__side happ__side--b m-only" />
           <Leaves className="happ__leaf happ__leaf--b" />
         </div>
 

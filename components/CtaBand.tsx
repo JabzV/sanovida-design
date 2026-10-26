@@ -17,10 +17,12 @@ interface CtaBandProps {
   trust?: boolean;
   /** Centered layout (reference 2) instead of the split layout. */
   centered?: boolean;
+  /** Show the trust rings on phones only (mobile reference 2 has them, desktop reference 2 does not). */
+  mobileTrust?: boolean;
 }
 
 /** The sunlit closing band with a gold CTA framed by leaves. */
-export function CtaBand({ eyebrow, title, lead, cta, image, alt, trust, centered }: CtaBandProps) {
+export function CtaBand({ eyebrow, title, lead, cta, image, alt, trust, centered, mobileTrust }: CtaBandProps) {
   const { t } = useSite();
   const icons = [Truck, ShieldCheck, CreditCard, MessageCircle];
   const labels = [t.trust.fast, t.trust.secure100, t.trust.payments, t.trust.support];
@@ -41,8 +43,8 @@ export function CtaBand({ eyebrow, title, lead, cta, image, alt, trust, centered
             <Leaves className="leaves--flip" />
           </div>
         </div>
-        {trust && (
-          <ul className="ringrow ringrow--stack ctaband__trust">
+        {(trust || mobileTrust) && (
+          <ul className={`ringrow ringrow--stack ctaband__trust${!trust ? " m-only" : ""}`}>
             {labels.map((label, i) => {
               const [a, ...rest] = label.split(" ");
               return <RingItem key={label} icon={icons[i]} title={a} sub={rest.join(" ")} />;

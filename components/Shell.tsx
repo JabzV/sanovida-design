@@ -17,7 +17,9 @@ export function Shell({ locale, page, children }: { locale: Locale; page: PageKe
       </a>
       <ScrollToTop />
       <Header />
-      <main id="main">{children}</main>
+      <main id="main" data-page={page}>
+        {children}
+      </main>
       <Footer />
     </SiteProvider>
   );

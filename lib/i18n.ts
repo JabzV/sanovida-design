@@ -189,7 +189,16 @@ const es = {
         { title: "Diseño premium", sub: "que inspira confianza." },
         { title: "Calidad y autenticidad", sub: "en cada empaque." },
         { title: "Fórmula segura", sub: "y confiable." },
+        { title: "Respaldado por ciencia", sub: "e innovación." },
       ],
+      details: {
+        eyebrow: "Detalles que marcan la diferencia",
+        items: [
+          { title: "Diseño premium", sub: "Un empaque elegante que refleja nuestra calidad." },
+          { title: "Información clara", sub: "Dosis y beneficios siempre visibles para tu tranquilidad." },
+          { title: "Protección total", sub: "Tabletas en empaque seguro para mantener su efectividad." },
+        ],
+      },
     },
     confidence: {
       eyebrow: "Tu tranquilidad es nuestra prioridad",
@@ -245,6 +254,7 @@ const es = {
       items: ["Peso saludable", "Más energía", "Mayor confianza", "Bienestar total"],
       handLines: ["Pequeños", "cambios,", "grandes", "resultados"],
     },
+    pay: "Compra con confianza en SanoVida.mx",
   },
 
   app: {
@@ -265,6 +275,7 @@ const es = {
       title: "Herramientas reales",
       titleEm: "para tu día a día",
       body: "La app de SanoVida te acompaña en cada paso con planes, seguimiento y recordatorios diseñados para tu bienestar.",
+      handLines: ["Resultados", "reales", "en tu mano"],
       features: [
         { id: "progress", title: "Seguimiento de peso", sub: "Registra tu peso y visualiza tu progreso con gráficas claras y motivadoras." },
         { id: "nutrition", title: "Planes de nutrición", sub: "Recibe planes de alimentación personalizados con comidas saludables y deliciosas." },
@@ -693,7 +704,16 @@ const en: Dictionary = {
         { title: "Premium design", sub: "that inspires confidence." },
         { title: "Quality and authenticity", sub: "in every package." },
         { title: "Safe and reliable", sub: "formula." },
+        { title: "Backed by science", sub: "and innovation." },
       ],
+      details: {
+        eyebrow: "Details that make the difference",
+        items: [
+          { title: "Premium design", sub: "Elegant packaging that reflects our quality." },
+          { title: "Clear information", sub: "Dosage and benefits always visible for your peace of mind." },
+          { title: "Total protection", sub: "Tablets in secure packaging that keeps them effective." },
+        ],
+      },
     },
     confidence: {
       eyebrow: "Your peace of mind is our priority",
@@ -749,6 +769,7 @@ const en: Dictionary = {
       items: ["Healthy weight", "More energy", "More confidence", "Total wellbeing"],
       handLines: ["Small", "changes,", "big", "results"],
     },
+    pay: "Shop with confidence at SanoVida.mx",
   },
 
   app: {
@@ -769,6 +790,7 @@ const en: Dictionary = {
       title: "Real tools",
       titleEm: "for your everyday",
       body: "The SanoVida app supports you at every step with plans, tracking and reminders designed for your wellbeing.",
+      handLines: ["Real results", "in your hand"],
       features: [
         { id: "progress", title: "Weight tracking", sub: "Log your weight and see your progress in clear, motivating charts." },
         { id: "nutrition", title: "Nutrition plans", sub: "Receive personalized meal plans with healthy, delicious meals." },
