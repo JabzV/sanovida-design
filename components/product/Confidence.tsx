@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "motion/react";
 import { CreditCard, FlaskConical, Headset, Heart, PackageCheck, ShieldCheck, Sparkles, Truck } from "lucide-react";
 import { Media } from "../Media";
+import { fadeUp, revealList } from "../Motion";
 import { useSite } from "../SiteContext";
 import { Eyebrow, Leaves } from "../Ui";
 
@@ -21,23 +23,23 @@ export function Confidence() {
         <Media id="H1" className="confidence__bgimg" alt="" sizes="100vw" position="50% 100%" tint="transparent" quiet />
       </div>
       <div className="wrap">
-        <div className="confidence__head">
-          <Eyebrow>{c.eyebrow}</Eyebrow>
-          <h2 id="confidence-title" className="display h2">
+        <motion.div className="confidence__head" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{c.eyebrow}</Eyebrow>
+          <motion.h2 id="confidence-title" className="display h2" variants={fadeUp}>
             {c.title}
-          </h2>
-          {c.lead && <p>{c.lead}</p>}
-          <span className="confidence__leaves" aria-hidden="true">
+          </motion.h2>
+          {c.lead && <motion.p variants={fadeUp}>{c.lead}</motion.p>}
+          <motion.span className="confidence__leaves" aria-hidden="true" variants={fadeUp}>
             <Leaves />
             <Leaves className="leaves--flip" />
-          </span>
-        </div>
+          </motion.span>
+        </motion.div>
 
-        <ul className="trustgrid">
+        <motion.ul className="trustgrid" {...revealList(0.07)}>
           {c.items.map((item, i) => {
             const Icon = ICONS[i];
             return (
-              <li key={item.title + item.sub} className={`trustgrid__item trustgrid__item--${TONES[i]}`}>
+              <motion.li key={item.title + item.sub} className={`trustgrid__item trustgrid__item--${TONES[i]}`} variants={fadeUp}>
                 <span className="trustgrid__ring">
                   <Icon aria-hidden="true" strokeWidth={1.6} />
                 </span>
@@ -46,10 +48,10 @@ export function Confidence() {
                   <br />
                   {item.sub}
                 </span>
-              </li>
+              </motion.li>
             );
           })}
-        </ul>
+        </motion.ul>
       </div>
     </section>
   );

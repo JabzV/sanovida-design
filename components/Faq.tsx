@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { ArrowRight, Clock, FlaskConical, Mail, MessageCircle, Package, Plus, Smartphone, Truck } from "lucide-react";
 import { contact } from "@/lib/catalog";
 import { href } from "@/lib/routes";
 import { Media } from "./Media";
+import { fadeUp, revealList } from "./Motion";
 import { useSite } from "./SiteContext";
 import { Accent, Eyebrow, HandNote } from "./Ui";
 
@@ -27,15 +29,17 @@ export function Faq() {
   return (
     <>
       <header className="faqhero" aria-labelledby="faq-title">
-        <Media id="A1" className="faqhero__bg" alt="" sizes="100vw" position="68% 12%" tint="#F2E8DB" priority />
+        <Media id="A1" className="faqhero__bg" alt="" sizes="100vw" position="68% 12%" tint="#F2E8DB" priority enter="zoom" />
         <div className="wrap faqhero__inner">
-          <div className="faqhero__copy">
-            <Eyebrow>{f.eyebrow}</Eyebrow>
-            <h1 id="faq-title" className="display faqhero__title">
+          <motion.div className="faqhero__copy" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } } }}>
+            <Eyebrow variants={fadeUp}>{f.eyebrow}</Eyebrow>
+            <motion.h1 id="faq-title" className="display faqhero__title" variants={fadeUp}>
               <Accent text={f.title} />
-            </h1>
-            <p className="faqhero__lead">{f.lead}</p>
-            <nav className="faqhero__jump" aria-label={f.jump}>
+            </motion.h1>
+            <motion.p className="faqhero__lead" variants={fadeUp}>
+              {f.lead}
+            </motion.p>
+            <motion.nav className="faqhero__jump" aria-label={f.jump} variants={fadeUp}>
               {f.groups.map((group, i) => {
                 const Icon = GROUP_ICONS[i];
                 return (
@@ -46,8 +50,8 @@ export function Faq() {
                   </a>
                 );
               })}
-            </nav>
-          </div>
+            </motion.nav>
+          </motion.div>
           <HandNote lines={f.handLines} className="faqhero__hand" />
         </div>
       </header>
@@ -61,7 +65,7 @@ export function Faq() {
             {f.groups.map((group, i) => {
               const Icon = GROUP_ICONS[i];
               return (
-                <section key={group.title} id={slug(group.title)} className="faq__group" aria-labelledby={`faq-${slug(group.title)}`}>
+                <motion.section key={group.title} id={slug(group.title)} className="faq__group" aria-labelledby={`faq-${slug(group.title)}`} {...revealList()} variants={fadeUp}>
                   <header className="faq__grouphead">
                     <span className="faq__groupicon" aria-hidden="true">
                       <Icon strokeWidth={1.6} />
@@ -86,7 +90,7 @@ export function Faq() {
                       </details>
                     ))}
                   </div>
-                </section>
+                </motion.section>
               );
             })}
           </div>

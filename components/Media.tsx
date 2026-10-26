@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
+import { motion } from "motion/react";
 import { images, type ImageId } from "@/lib/catalog";
+import { EASE, pop, viewportOnce } from "./Motion";
 import { useSite } from "./SiteContext";
 
 interface MediaProps {
@@ -24,26 +26,37 @@ interface MediaProps {
   style?: CSSProperties;
   /** JPEG/WebP quality for the optimizer (default 75). Raise it for large hero renders. */
   quality?: number;
+  /**
+   * How the image arrives: "zoom" settles from a slight enlargement on page
+   * load (hero photos); "reveal" fades and grows in when scrolled into view.
+   */
+  enter?: "zoom" | "reveal";
 }
+
+const ENTER = {
+  zoom: { initial: { scale: 1.08, opacity: 0 }, animate: { scale: 1, opacity: 1 }, transition: { duration: 1.4, ease: EASE } },
+  reveal: { initial: "hidden", whileInView: "show", viewport: viewportOnce, variants: pop },
+} as const;
 
 /**
  * Renders `public/images/<file>` when it exists, otherwise a labelled
  * placeholder naming the manifest id, so the page always shows what goes where.
  */
-export function Media({ id, alt, sizes, className = "", priority, fit = "cover", position, tint, fallback, quiet, style, quality }: MediaProps) {
+export function Media({ id, alt, sizes, className = "", priority, fit = "cover", position, tint, fallback, quiet, style, quality, enter }: MediaProps) {
   const { available, t } = useSite();
   const meta = images[id];
+  const motionProps = enter ? ENTER[enter] : {};
 
   if (available.has(id)) {
     return (
-      <div className={`media ${className}`} style={style}>
+      <motion.div className={`media ${className}`} style={style} {...motionProps}>
         <Image src={`/images/${meta.file}`} alt={alt} fill sizes={sizes} priority={priority} quality={quality} style={{ objectFit: fit, objectPosition: position }} />
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className={`media media--pending ${className}`} style={{ ...style, ["--tint" as string]: tint }} role="img" aria-label={alt}>
+    <motion.div className={`media media--pending ${className}`} style={{ ...style, ["--tint" as string]: tint }} role="img" aria-label={alt} {...motionProps}>
       {fallback}
       {!quiet && (
         <span className="media__tag" aria-hidden="true">
@@ -53,6 +66,6 @@ export function Media({ id, alt, sizes, className = "", priority, fit = "cover",
           </small>
         </span>
       )}
-    </div>
+    </motion.div>
   );
 }

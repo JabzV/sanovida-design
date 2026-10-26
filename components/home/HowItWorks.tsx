@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "motion/react";
 import { BarChart3, ClipboardList, Flower2 } from "lucide-react";
+import { fadeUp, revealList } from "../Motion";
 import { useSite } from "../SiteContext";
 import { Eyebrow } from "../Ui";
 
@@ -14,19 +16,23 @@ export function HowItWorks() {
   return (
     <section id="como-funciona" className="hhow section section--tight" aria-labelledby="hhow-title">
       <div className="wrap hhow__grid">
-        <div className="hhow__copy">
-          <Eyebrow>{h.eyebrow}</Eyebrow>
-          <h2 id="hhow-title" className="display h2">
+        <motion.div className="hhow__copy" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{h.eyebrow}</Eyebrow>
+          <motion.h2 id="hhow-title" className="display h2" variants={fadeUp}>
             {h.title}
-          </h2>
-          {h.lead && <p>{h.lead}</p>}
-          {h.note && <span className="hand hhow__hand">{h.note}</span>}
-        </div>
-        <ol className="stepsrow stepsrow--line">
+          </motion.h2>
+          {h.lead && <motion.p variants={fadeUp}>{h.lead}</motion.p>}
+          {h.note && (
+            <motion.span className="hand hhow__hand" variants={fadeUp}>
+              {h.note}
+            </motion.span>
+          )}
+        </motion.div>
+        <motion.ol className="stepsrow stepsrow--line" {...revealList(0.16, 0.1)}>
           {h.steps.map((step, i) => {
             const Icon = ICONS[i];
             return (
-              <li key={step.title}>
+              <motion.li key={step.title} variants={fadeUp}>
                 <span className="stepsrow__ring" aria-hidden="true">
                   <Icon className="stepsrow__icon" strokeWidth={1.5} />
                 </span>
@@ -35,10 +41,10 @@ export function HowItWorks() {
                   <b>{step.title}</b>
                   {step.sub}
                 </span>
-              </li>
+              </motion.li>
             );
           })}
-        </ol>
+        </motion.ol>
       </div>
     </section>
   );

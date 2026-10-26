@@ -1,8 +1,10 @@
 "use client";
 
+import { motion } from "motion/react";
 import { CreditCard, MessageCircle, ShieldCheck, Truck } from "lucide-react";
 import type { ImageId } from "@/lib/catalog";
 import { Media } from "./Media";
+import { fadeUp, revealList } from "./Motion";
 import { useSite } from "./SiteContext";
 import { Accent, BuyButton, Eyebrow, Leaves, RingItem } from "./Ui";
 
@@ -31,25 +33,25 @@ export function CtaBand({ eyebrow, title, lead, cta, image, alt, trust, centered
     <section className={`ctaband${centered ? " ctaband--center" : ""}`} aria-labelledby="ctaband-title">
       <Media id={image} className="ctaband__bg" alt={alt} sizes="100vw" position="50% 0%" tint="#F2E6DA" />
       <div className="wrap ctaband__inner">
-        <div className="ctaband__copy">
-          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <h2 id="ctaband-title" className="display ctaband__title">
+        <motion.div className="ctaband__copy" {...revealList(0.1)}>
+          {eyebrow && <Eyebrow variants={fadeUp}>{eyebrow}</Eyebrow>}
+          <motion.h2 id="ctaband-title" className="display ctaband__title" variants={fadeUp}>
             <Accent text={title} />
-          </h2>
-          <p>{lead}</p>
-          <div className="ctaband__cta">
+          </motion.h2>
+          <motion.p variants={fadeUp}>{lead}</motion.p>
+          <motion.div className="ctaband__cta" variants={fadeUp}>
             <Leaves />
             <BuyButton size="lg">{cta}</BuyButton>
             <Leaves className="leaves--flip" />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         {(trust || mobileTrust) && (
-          <ul className={`ringrow ringrow--stack ctaband__trust${!trust ? " m-only" : ""}`}>
+          <motion.ul className={`ringrow ringrow--stack ctaband__trust${!trust ? " m-only" : ""}`} {...revealList(0.1, 0.2)}>
             {labels.map((label, i) => {
               const [a, ...rest] = label.split(" ");
-              return <RingItem key={label} icon={icons[i]} title={a} sub={rest.join(" ")} />;
+              return <RingItem key={label} icon={icons[i]} title={a} sub={rest.join(" ")} variants={fadeUp} />;
             })}
-          </ul>
+          </motion.ul>
         )}
       </div>
     </section>

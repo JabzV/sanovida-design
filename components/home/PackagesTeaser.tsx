@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "motion/react";
 import { plans } from "@/lib/catalog";
 import { Media } from "../Media";
+import { fadeUp, revealList } from "../Motion";
 import { PlanCard } from "../PlanCard";
 import { useSite } from "../SiteContext";
 import { Eyebrow } from "../Ui";
@@ -17,18 +19,18 @@ export function PackagesTeaser() {
         <Media id="H1" className="hpack__bgimg" alt="" sizes="100vw" position="50% 100%" tint="transparent" quiet />
       </div>
       <div className="wrap hpack__grid">
-        <div className="hpack__copy">
-          <Eyebrow>{k.eyebrow}</Eyebrow>
-          <h2 id="hpack-title" className="display h2">
+        <motion.div className="hpack__copy" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{k.eyebrow}</Eyebrow>
+          <motion.h2 id="hpack-title" className="display h2" variants={fadeUp}>
             {k.title}
-          </h2>
-          <p>{k.lead}</p>
-        </div>
-        <div className="plans plans--compact">
+          </motion.h2>
+          <motion.p variants={fadeUp}>{k.lead}</motion.p>
+        </motion.div>
+        <motion.div className="plans plans--compact" {...revealList(0.12)}>
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} compact />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

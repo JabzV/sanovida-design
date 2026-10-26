@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "motion/react";
 import { Lock, Menu, X } from "lucide-react";
+import { EASE, fadeUp, stagger } from "./Motion";
 import { href, type PageKey } from "@/lib/routes";
 import { Logo } from "./Logo";
 import { useSite } from "./SiteContext";
@@ -93,16 +95,29 @@ export function Header() {
         </div>
       </div>
 
-      <div id="mobile-menu" className="sheet" hidden={!open}>
-        <nav aria-label={locale === "es" ? "Principal" : "Main"}>
-          {items.map((item) => (
-            <Link key={item.label} href={item.to} onClick={() => setOpen(false)} aria-current={isActive(item) ? "page" : undefined}>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <BuyButton className="btn--block" />
-      </div>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            className="sheet"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.35, ease: EASE }}
+          >
+            <motion.nav aria-label={locale === "es" ? "Principal" : "Main"} initial="hidden" animate="show" variants={stagger(0.05, 0.1)}>
+              {items.map((item) => (
+                <motion.div key={item.label} variants={fadeUp}>
+                  <Link href={item.to} onClick={() => setOpen(false)} aria-current={isActive(item) ? "page" : undefined}>
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.nav>
+            <BuyButton className="btn--block" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -4,6 +4,7 @@ import { getDictionary, type Locale } from "@/lib/i18n";
 import type { PageKey } from "@/lib/routes";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { MotionProvider } from "./Motion";
 import { ScrollToTop } from "./ScrollToTop";
 import { SiteProvider } from "./SiteContext";
 
@@ -12,15 +13,17 @@ export function Shell({ locale, page, children }: { locale: Locale; page: PageKe
   const t = getDictionary(locale);
   return (
     <SiteProvider locale={locale} t={t} page={page} available={getAvailableImages()}>
-      <a className="skip-link" href="#main">
-        {t.skip}
-      </a>
-      <ScrollToTop />
-      <Header />
-      <main id="main" data-page={page}>
-        {children}
-      </main>
-      <Footer />
+      <MotionProvider>
+        <a className="skip-link" href="#main">
+          {t.skip}
+        </a>
+        <ScrollToTop />
+        <Header />
+        <main id="main" data-page={page}>
+          {children}
+        </main>
+        <Footer />
+      </MotionProvider>
     </SiteProvider>
   );
 }

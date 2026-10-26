@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { FlaskConical, Heart, ShieldCheck, Sparkles } from "lucide-react";
 import { dosages } from "@/lib/catalog";
 import { fill } from "@/lib/i18n";
 import { href } from "@/lib/routes";
 import { BoxMock } from "../BoxMock";
 import { Media } from "../Media";
+import { fadeUp, revealList } from "../Motion";
 import { useSite } from "../SiteContext";
 import { Accent, Eyebrow, RingItem } from "../Ui";
 
@@ -20,25 +22,27 @@ export function ProductIntro() {
   return (
     <section id="producto" className="hprod section" aria-labelledby="hprod-title">
       <div className="wrap hprod__grid">
-        <div className="hprod__copy">
-          <Eyebrow>{p.eyebrow}</Eyebrow>
-          <h2 id="hprod-title" className="display hprod__title">
+        <motion.div className="hprod__copy" {...revealList(0.08)}>
+          <Eyebrow variants={fadeUp}>{p.eyebrow}</Eyebrow>
+          <motion.h2 id="hprod-title" className="display hprod__title" variants={fadeUp}>
             {p.title}
-          </h2>
-          <p className="hprod__subtitle">
+          </motion.h2>
+          <motion.p className="hprod__subtitle" variants={fadeUp}>
             <Accent text={p.subtitle} />
-          </p>
-          <p className="hprod__body">{p.body}</p>
+          </motion.p>
+          <motion.p className="hprod__body" variants={fadeUp}>
+            {p.body}
+          </motion.p>
           <ul className="ringrow ringrow--divided">
             {p.icons.map((item, i) => (
-              <RingItem key={item.title} icon={ICONS[i]} title={item.title} sub={item.sub} />
+              <RingItem key={item.title} icon={ICONS[i]} title={item.title} sub={item.sub} variants={fadeUp} />
             ))}
           </ul>
-        </div>
+        </motion.div>
 
-        <ul className="boxrow">
+        <motion.ul className="boxrow" {...revealList(0.1, 0.1)}>
           {dosages.map((d) => (
-            <li key={d.id} className="boxrow__item" style={{ ["--c" as string]: d.color, ["--wash" as string]: d.wash }}>
+            <motion.li key={d.id} className="boxrow__item" style={{ ["--c" as string]: d.color, ["--wash" as string]: d.wash }} variants={fadeUp}>
               <Link href={href(locale, "product", `dosis-${d.id.replace(".", "-")}`)} className="boxrow__link">
                 <Media
                   id={d.image}
@@ -54,9 +58,9 @@ export function ProductIntro() {
                 <span className="pill">{t.dosages[d.id].name}</span>
                 <span className="boxrow__desc">{t.dosages[d.id].desc}</span>
               </Link>
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       </div>
     </section>
   );

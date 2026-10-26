@@ -1,10 +1,12 @@
 "use client";
 
+import { motion } from "motion/react";
 import { CircleCheck } from "lucide-react";
 import { dosages } from "@/lib/catalog";
 import { fill } from "@/lib/i18n";
 import { BoxMock } from "../BoxMock";
 import { Media } from "../Media";
+import { fadeUp, lift, revealList } from "../Motion";
 import { useSite } from "../SiteContext";
 import { BuyButton, Eyebrow } from "../Ui";
 
@@ -16,19 +18,26 @@ export function DosageGrid() {
   return (
     <section id="dosis" className="dgrid section" aria-labelledby="dgrid-title">
       <div className="wrap">
-        <div className="section-head">
-          <Eyebrow>{d.eyebrow}</Eyebrow>
-          <h2 id="dgrid-title" className="display h2">
+        <motion.div className="section-head" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{d.eyebrow}</Eyebrow>
+          <motion.h2 id="dgrid-title" className="display h2" variants={fadeUp}>
             {d.title}
-          </h2>
-          <p>{d.lead}</p>
-        </div>
+          </motion.h2>
+          <motion.p variants={fadeUp}>{d.lead}</motion.p>
+        </motion.div>
 
-        <ul className="dcards">
+        <motion.ul className="dcards" {...revealList(0.1)}>
           {dosages.map((x) => {
             const copy = t.dosages[x.id];
             return (
-              <li key={x.id} id={`dosis-${x.id.replace(".", "-")}`} className="dcard" style={{ ["--c" as string]: x.color, ["--wash" as string]: x.wash }}>
+              <motion.li
+                key={x.id}
+                id={`dosis-${x.id.replace(".", "-")}`}
+                className="dcard"
+                style={{ ["--c" as string]: x.color, ["--wash" as string]: x.wash }}
+                variants={fadeUp}
+                whileHover={lift}
+              >
                 <Media
                   id={x.image}
                   className="dcard__img"
@@ -53,10 +62,10 @@ export function DosageGrid() {
                 <BuyButton dosage={x.id} size="sm" className="btn--gold-soft dcard__cta">
                   {d.cta} {x.id} mg
                 </BuyButton>
-              </li>
+              </motion.li>
             );
           })}
-        </ul>
+        </motion.ul>
 
         <p className="dgrid__note">{d.note}</p>
       </div>

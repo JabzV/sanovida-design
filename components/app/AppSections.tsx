@@ -1,8 +1,10 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Apple, BarChart3, Bell, Dumbbell, LineChart, Mail, Ruler, Scale, ShoppingCart, Smartphone } from "lucide-react";
 import { BoxMock } from "../BoxMock";
 import { Media } from "../Media";
+import { fadeUp, lift, revealList } from "../Motion";
 import { Phone } from "../PhoneScreen";
 import { useSite } from "../SiteContext";
 import { BuyButton, Eyebrow, HandNote, TrustRow } from "../Ui";
@@ -18,36 +20,37 @@ export function AppTools() {
   return (
     <section id="herramientas" className="atools section" aria-labelledby="atools-title">
       <div className="wrap atools__grid">
-        <div className="atools__copy">
-          <Eyebrow>{a.eyebrow}</Eyebrow>
-          <h2 id="atools-title" className="display h2">
+        <motion.div className="atools__copy" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{a.eyebrow}</Eyebrow>
+          <motion.h2 id="atools-title" className="display h2" variants={fadeUp}>
             {a.title} <em className="em-gold">{a.titleEm}</em>
-          </h2>
-          <p>{a.body}</p>
-        </div>
+          </motion.h2>
+          <motion.p variants={fadeUp}>{a.body}</motion.p>
+        </motion.div>
 
-        <div className="phonefan" aria-hidden="true">
+        {/* The fan rises as one piece; the phones keep their own CSS offsets. */}
+        <motion.div className="phonefan" aria-hidden="true" {...revealList()} variants={fadeUp}>
           <Phone screen="nutrition" className="phone--sm phonefan__a" />
           <Phone screen="progress" className="phone--sm phonefan__b" />
           <Phone screen="workouts" className="phone--sm phonefan__c" />
           {/* Phones only: the hand-written note beside the fan (mobile reference 4). */}
           <HandNote lines={a.handLines} className="phonefan__hand m-only" />
-        </div>
+        </motion.div>
 
-        <ul className="fcards">
+        <motion.ul className="fcards" {...revealList(0.08)}>
           {a.features.map((f) => {
             const Icon = FEATURE_ICONS[f.id as keyof typeof FEATURE_ICONS] ?? LineChart;
             return (
-              <li key={f.id} className={`fcard fcard--${f.id}`}>
+              <motion.li key={f.id} className={`fcard fcard--${f.id}`} variants={fadeUp} whileHover={lift}>
                 <span className="fcard__icon">
                   <Icon aria-hidden="true" strokeWidth={1.5} />
                 </span>
                 <h3>{f.title}</h3>
                 <p>{f.sub}</p>
-              </li>
+              </motion.li>
             );
           })}
-        </ul>
+        </motion.ul>
       </div>
     </section>
   );
@@ -61,18 +64,18 @@ export function AppSteps() {
   return (
     <section id="como-funciona" className="asteps section section--tight" aria-labelledby="asteps-title">
       <div className="wrap asteps__grid">
-        <div className="asteps__copy">
-          <Eyebrow>{h.eyebrow}</Eyebrow>
-          <h2 id="asteps-title" className="display h2">
+        <motion.div className="asteps__copy" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{h.eyebrow}</Eyebrow>
+          <motion.h2 id="asteps-title" className="display h2" variants={fadeUp}>
             {h.title} <em className="em-gold">{h.titleEm}</em>
-          </h2>
-          <p>{h.lead}</p>
-        </div>
-        <ol className="stepsrow stepsrow--card">
+          </motion.h2>
+          <motion.p variants={fadeUp}>{h.lead}</motion.p>
+        </motion.div>
+        <motion.ol className="stepsrow stepsrow--card" {...revealList(0.16, 0.1)}>
           {h.steps.map((step, i) => {
             const Icon = STEP_ICONS[i];
             return (
-              <li key={step.title}>
+              <motion.li key={step.title} variants={fadeUp}>
                 <span className="stepsrow__num" aria-hidden="true">
                   {i + 1}
                 </span>
@@ -81,10 +84,10 @@ export function AppSteps() {
                   <b>{step.title}</b>
                   {step.sub}
                 </span>
-              </li>
+              </motion.li>
             );
           })}
-        </ol>
+        </motion.ol>
       </div>
     </section>
   );
@@ -107,6 +110,7 @@ export function AppClosing() {
           fit="cover"
           tint="transparent"
           quiet
+          enter="reveal"
           fallback={
             <div className="aclose__trio" aria-hidden="true">
               <BoxMock dosage="0.8" size={150} />
@@ -115,14 +119,19 @@ export function AppClosing() {
             </div>
           }
         />
+        {/* On phones this wrapper is `display: contents`, so each child reveals itself. */}
         <div className="aclose__copy">
-          <Eyebrow>{c.eyebrow}</Eyebrow>
-          <h2 id="aclose-title" className="display h2">
+          <Eyebrow reveal>{c.eyebrow}</Eyebrow>
+          <motion.h2 id="aclose-title" className="display h2" {...revealList()} variants={fadeUp}>
             {c.title} <em>{c.titleEm}</em>
-          </h2>
-          <p>{c.lead}</p>
-          <BuyButton size="lg">{c.cta}</BuyButton>
-          <TrustRow items={4} />
+          </motion.h2>
+          <motion.p {...revealList()} variants={fadeUp}>
+            {c.lead}
+          </motion.p>
+          <BuyButton size="lg" reveal>
+            {c.cta}
+          </BuyButton>
+          <TrustRow items={4} reveal />
         </div>
       </div>
     </section>

@@ -1,10 +1,12 @@
 "use client";
 
+import { motion } from "motion/react";
 import { CircleCheck, Tag } from "lucide-react";
 import { formatMXN, type Plan } from "@/lib/catalog";
 import { fill } from "@/lib/i18n";
 import { BoxStack } from "./BoxMock";
 import { Media } from "./Media";
+import { fadeUp, lift } from "./Motion";
 import { useSite } from "./SiteContext";
 import { BuyButton, TrustRow } from "./Ui";
 
@@ -19,7 +21,12 @@ export function PlanCard({ plan, compact, dosage }: { plan: Plan; compact?: bool
   const features = compact ? copy.short : copy.features;
 
   return (
-    <article className={`plan${plan.popular ? " plan--popular" : ""}${compact ? " plan--compact" : ""}`} aria-labelledby={`plan-${plan.id}${compact ? "-c" : ""}`}>
+    <motion.article
+      className={`plan${plan.popular ? " plan--popular" : ""}${compact ? " plan--compact" : ""}`}
+      aria-labelledby={`plan-${plan.id}${compact ? "-c" : ""}`}
+      variants={fadeUp}
+      whileHover={lift}
+    >
       {plan.popular && <p className="plan__badge">{common.popular}</p>}
 
       <header className="plan__head">
@@ -82,6 +89,6 @@ export function PlanCard({ plan, compact, dosage }: { plan: Plan; compact?: bool
       </BuyButton>
 
       {!compact && <TrustRow className="plan__trust" />}
-    </article>
+    </motion.article>
   );
 }

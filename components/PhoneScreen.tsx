@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { motion, type Variants } from "motion/react";
 import { Bell, ChevronRight, Dumbbell, Home, Play, Ruler, Utensils } from "lucide-react";
 import { images } from "@/lib/catalog";
+import { EASE, viewportOnce } from "./Motion";
 import { useSite } from "./SiteContext";
 
 export type ScreenId = "progress" | "nutrition" | "workouts" | "measures" | "reminders";
@@ -10,13 +12,17 @@ export type ScreenId = "progress" | "nutrition" | "workouts" | "measures" | "rem
 const TAB_ICONS = [Home, Utensils, Dumbbell, Ruler, Bell];
 const TAB_FOR: Record<ScreenId, number> = { progress: 0, nutrition: 1, workouts: 2, measures: 3, reminders: 4 };
 
-/** A phone frame around an illustrative app screen. */
-export function Phone({ screen, className = "" }: { screen: ScreenId; className?: string }) {
+/**
+ * A phone frame around an illustrative app screen. `variants` lets a parent
+ * cascade its entrance; `float` adds the slow hover (a CSS keyframe on
+ * `translate`, so it composes with Motion's transforms).
+ */
+export function Phone({ screen, className = "", variants, float }: { screen: ScreenId; className?: string; variants?: Variants; float?: boolean }) {
   return (
-    <div className={`phone ${className}`}>
+    <motion.div className={`phone${float ? " phone--float" : ""} ${className}`} variants={variants}>
       <div className="phone__notch" aria-hidden="true" />
       <PhoneScreen screen={screen} />
-    </div>
+    </motion.div>
   );
 }
 
@@ -122,13 +128,22 @@ function Progress() {
   const { t } = useSite();
   const s = t.app.screen;
   const r = 52;
-  const c = 2 * Math.PI * r;
+  /* Dash lengths are fractions of the circle (pathLength = 1): a 75% track, 62% of it filled. */
   return (
     <>
       <div className="ring-chart">
         <svg viewBox="0 0 120 120" aria-hidden="true">
-          <circle cx="60" cy="60" r={r} className="ring-chart__track" strokeDasharray={`${c * 0.75} ${c}`} />
-          <circle cx="60" cy="60" r={r} className="ring-chart__fill" strokeDasharray={`${c * 0.75 * 0.62} ${c}`} />
+          <circle cx="60" cy="60" r={r} className="ring-chart__track" pathLength={1} strokeDasharray="0.75 1" />
+          <motion.circle
+            cx="60"
+            cy="60"
+            r={r}
+            className="ring-chart__fill"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 0.75 * 0.62 }}
+            viewport={viewportOnce}
+            transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
+          />
         </svg>
         <div className="ring-chart__label">
           <small>{s.progress}</small>
@@ -141,8 +156,22 @@ function Progress() {
       </div>
       <div className="screen__chart">
         <svg viewBox="0 0 200 64" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 14 L28 18 L56 22 L84 26 L112 34 L140 38 L168 46 L200 52 V64 H0Z" className="screen__area" />
-          <path d="M0 14 L28 18 L56 22 L84 26 L112 34 L140 38 L168 46 L200 52" className="screen__line" />
+          <motion.path
+            d="M0 14 L28 18 L56 22 L84 26 L112 34 L140 38 L168 46 L200 52 V64 H0Z"
+            className="screen__area"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.8, delay: 1 }}
+          />
+          <motion.path
+            d="M0 14 L28 18 L56 22 L84 26 L112 34 L140 38 L168 46 L200 52"
+            className="screen__line"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={viewportOnce}
+            transition={{ duration: 1.2, ease: EASE, delay: 0.5 }}
+          />
         </svg>
       </div>
       <div className="screen__cards">

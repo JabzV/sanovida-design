@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Bell, CreditCard, Dumbbell, Flower2, Headset, Heart, Leaf, Lock, ShieldCheck, TrendingUp, Truck, Utensils, Zap } from "lucide-react";
 import { Media } from "../Media";
+import { fadeUp, pop, revealList } from "../Motion";
 import { Phone } from "../PhoneScreen";
 import { useSite } from "../SiteContext";
 import { Eyebrow, HandNote } from "../Ui";
@@ -15,20 +17,20 @@ export function AssuranceBand() {
   const { t } = useSite();
   return (
     <section className="aband" aria-label={t.product.confidence.title}>
-      <ul className="wrap aband__list">
+      <motion.ul className="wrap aband__list" {...revealList(0.1)}>
         {t.packages.band.map((item, i) => {
           const Icon = BAND_ICONS[i];
           return (
-            <li key={item.title}>
+            <motion.li key={item.title} variants={fadeUp}>
               <Icon aria-hidden="true" strokeWidth={1.4} />
               <span>
                 <b>{item.title}</b>
                 {item.sub}
               </span>
-            </li>
+            </motion.li>
           );
         })}
-      </ul>
+      </motion.ul>
     </section>
   );
 }
@@ -43,9 +45,9 @@ export function LifeBand() {
       <Media id="F2" className="lifeband__bg" alt={t.alt.closing} sizes="100vw" position="10% 40%" tint="#F2E6DA" />
       <div className="wrap lifeband__inner">
         {/* Phones only: the app sits beside the results, as in mobile reference 3. */}
-        <div className="lifeband__phone m-only" aria-hidden="true">
-          <Phone screen="progress" className="phone--sm" />
-        </div>
+        <motion.div className="lifeband__phone m-only" aria-hidden="true" {...revealList()}>
+          <Phone screen="progress" className="phone--sm" variants={pop} float />
+        </motion.div>
         <div className="lifeband__app m-only">
           <Eyebrow>{a.eyebrow}</Eyebrow>
           <h3 className="display lifeband__apptitle">{a.title}</h3>
@@ -63,20 +65,20 @@ export function LifeBand() {
           </ul>
         </div>
 
-        <h2 id="lifeband-title" className="display lifeband__title">
+        <motion.h2 id="lifeband-title" className="display lifeband__title" {...revealList()} variants={fadeUp}>
           {l.title} <em>{l.titleEm}</em>
-        </h2>
-        <ul className="lifeband__items">
+        </motion.h2>
+        <motion.ul className="lifeband__items" {...revealList(0.1, 0.15)}>
           {l.items.map((label, i) => {
             const Icon = LIFE_ICONS[i];
             return (
-              <li key={label}>
+              <motion.li key={label} variants={fadeUp}>
                 <Icon aria-hidden="true" strokeWidth={1.4} />
                 {label}
-              </li>
+              </motion.li>
             );
           })}
-        </ul>
+        </motion.ul>
         <HandNote lines={l.handLines} className="lifeband__hand" />
       </div>
 

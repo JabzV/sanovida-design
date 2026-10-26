@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Bell, Dumbbell, TrendingUp, Utensils } from "lucide-react";
 import { Media } from "../Media";
+import { fadeUp, lift, pop, revealList } from "../Motion";
 import { Phone } from "../PhoneScreen";
 import { useSite } from "../SiteContext";
 import { Eyebrow, Leaves, StoreBadges } from "../Ui";
@@ -20,26 +22,26 @@ export function AppTeaser() {
       </div>
 
       <div className="wrap happ__grid">
-        <div className="happ__copy">
-          <Eyebrow>{a.eyebrow}</Eyebrow>
-          <h2 id="happ-title" className="display h2">
+        <motion.div className="happ__copy" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{a.eyebrow}</Eyebrow>
+          <motion.h2 id="happ-title" className="display h2" variants={fadeUp}>
             {a.title}
-          </h2>
-          <p>{a.body}</p>
-          <StoreBadges className="happ__stores" />
-        </div>
+          </motion.h2>
+          <motion.p variants={fadeUp}>{a.body}</motion.p>
+          <StoreBadges className="happ__stores" variants={fadeUp} />
+        </motion.div>
 
-        <div className="happ__phone">
+        <motion.div className="happ__phone" {...revealList(0.15)}>
           <Leaves className="happ__leaf happ__leaf--a" />
           {/* Phones only: two more screens fan out behind the main one (mobile reference 1). */}
           <Phone screen="nutrition" className="phone--sm happ__side happ__side--a m-only" />
-          <Phone screen="progress" className="phone--sm happ__main" />
+          <Phone screen="progress" className="phone--sm happ__main" variants={pop} float />
           <Phone screen="workouts" className="phone--sm happ__side happ__side--b m-only" />
           <Leaves className="happ__leaf happ__leaf--b" />
-        </div>
+        </motion.div>
 
-        <ul className="tiles">
-          <li className="tile">
+        <motion.ul className="tiles" {...revealList(0.1, 0.1)}>
+          <motion.li className="tile" variants={fadeUp} whileHover={lift}>
             <h3>
               <span className="tile__icon tile__icon--leaf">
                 <Utensils strokeWidth={2} />
@@ -48,8 +50,8 @@ export function AppTeaser() {
             </h3>
             <p>{nutrition.sub}</p>
             <Media id="E1" className="tile__img" alt={t.alt.meal} sizes="(min-width: 768px) 900px, 90vw" quality={90} tint="#F1E4D2" quiet />
-          </li>
-          <li className="tile">
+          </motion.li>
+          <motion.li className="tile" variants={fadeUp} whileHover={lift}>
             <h3>
               <span className="tile__icon tile__icon--rose">
                 <Dumbbell strokeWidth={2} />
@@ -58,8 +60,8 @@ export function AppTeaser() {
             </h3>
             <p>{workouts.sub}</p>
             <Media id="E2" className="tile__img" alt={t.alt.workout} sizes="(min-width: 768px) 900px, 90vw" quality={90} tint="#EFE4DA" quiet />
-          </li>
-          <li className="tile">
+          </motion.li>
+          <motion.li className="tile" variants={fadeUp} whileHover={lift}>
             <h3>
               <span className="tile__icon tile__icon--gold">
                 <TrendingUp strokeWidth={2} />
@@ -82,8 +84,8 @@ export function AppTeaser() {
                 </div>
               }
             />
-          </li>
-          <li className="tile">
+          </motion.li>
+          <motion.li className="tile" variants={fadeUp} whileHover={lift}>
             <h3>
               <span className="tile__icon tile__icon--sky">
                 <Bell strokeWidth={2} />
@@ -106,8 +108,8 @@ export function AppTeaser() {
                 </div>
               }
             />
-          </li>
-        </ul>
+          </motion.li>
+        </motion.ul>
       </div>
     </section>
   );

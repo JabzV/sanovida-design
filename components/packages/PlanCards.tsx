@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "motion/react";
 import { plans } from "@/lib/catalog";
+import { fadeUp, revealList } from "../Motion";
 import { PlanCard } from "../PlanCard";
 import { useSite } from "../SiteContext";
 import { Eyebrow } from "../Ui";
@@ -13,18 +15,18 @@ export function PlanCards() {
   return (
     <section id="planes" className="ppack section section--tight" aria-labelledby="ppack-title">
       <div className="wrap">
-        <div className="ppack__head">
-          <Eyebrow>{k.eyebrow}</Eyebrow>
-          <h2 id="ppack-title" className="display h2">
+        <motion.div className="ppack__head" {...revealList()}>
+          <Eyebrow variants={fadeUp}>{k.eyebrow}</Eyebrow>
+          <motion.h2 id="ppack-title" className="display h2" variants={fadeUp}>
             {k.title}
-          </h2>
-          <p>{k.lead}</p>
-        </div>
-        <div className="plans plans--full">
+          </motion.h2>
+          <motion.p variants={fadeUp}>{k.lead}</motion.p>
+        </motion.div>
+        <motion.div className="plans plans--full" {...revealList(0.12)}>
           {plans.map((plan) => (
             <PlanCard key={plan.id} plan={plan} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -43,4 +43,8 @@ npm run build && npm start
 
 Below 768px the page follows `references/Landing Page/Moblie View` (1–5): the same multi-column compositions as the desktop, drawn for a **400px-wide screen** and zoomed to the real viewport with CSS `zoom` (320px → 0.8×, 390px → 0.975×, 430px → 1.075×, capped at 1.3× from 520px). Every phone therefore shows the same picture. All phone rules live in the `@media (max-width: 767px)` block at the end of `app/globals.css`; elements that exist only in the phone layout (extra phones in the fan, the product close-ups, the pay strip, the mobile trust row) carry the `m-only` class and are hidden from 768px up.
 
+## Motion
+
+Animations use [Motion](https://motion.dev) (`motion/react`). The shared vocabulary lives in `components/Motion.tsx`: `fadeUp` and `pop` variants, `stagger()` for containers, `revealList()` for lists that reveal on scroll, `lift` for hover, and `MotionProvider`, which honours the visitor's reduced-motion setting. Heroes cascade in on load, sections and lists reveal once on scroll, buttons and cards react to hover, the hand-written swash draws itself, and the progress ring and chart in the phone screens draw in. Elements that carry a CSS `transform` of their own (the phone fan, the popular plan card, drawn boxes) are either animated through a wrapper or positioned with `translate`, so Motion's inline transform never overrides them.
+
 Checkout is a full UI with a **mock submit**. No payment gateway is connected yet; `onSubmit` in `components/Checkout.tsx` is where one goes. The WhatsApp number, email and support hours in `lib/catalog.ts` are placeholders.

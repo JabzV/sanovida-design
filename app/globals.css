@@ -873,6 +873,7 @@ em.accent {
 }
 
 .sheet nav a {
+  display: block;
   border-bottom: 1px solid var(--line-soft);
   font-family: var(--font-serif);
   color: var(--ink);
@@ -4237,6 +4238,22 @@ em.accent {
     0 18px 30px -18px rgb(0 0 0 / 0.3);
 }
 
+/* Slow hover for featured phones. Uses `translate`, so Motion's transforms still apply. */
+@keyframes phone-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.phone--float {
+  animation: phone-float 5.5s ease-in-out infinite;
+}
+
 .phone--sm {
   width: 250px;
   height: 510px;
@@ -4870,7 +4887,7 @@ em.accent {
   }
 
   .plan--popular {
-    transform: translateY(-10px);
+    translate: 0 -10px;
   }
 
   .aband__list {
@@ -5027,7 +5044,7 @@ em.accent {
   }
 
   .plan--popular {
-    transform: none;
+    translate: none;
   }
 
   .happ__grid {
@@ -6239,7 +6256,7 @@ em.accent {
   }
 
   .plan--popular {
-    transform: none;
+    translate: none;
   }
 
   .plans--full .plan__head {
@@ -7320,12 +7337,15 @@ em.accent {
     font-size: 7px;
   }
 
-  .fields--card {
+  .method__fields {
     order: 10;
     grid-column: 1 / -1;
+  }
+
+  .fields--card {
     grid-template-columns: 1fr 1fr;
     gap: 7px;
-    padding: 4px 0 0;
+    padding: 4px 2px 3px;
   }
 
   .fields--card .field--wide {

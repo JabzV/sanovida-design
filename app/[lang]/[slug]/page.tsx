@@ -12,7 +12,7 @@ import { Confidence } from "@/components/product/Confidence";
 import { PlanCards } from "@/components/packages/PlanCards";
 import { AssuranceBand, LifeBand } from "@/components/packages/PackagesBands";
 import { AppClosing, AppSteps, AppTools } from "@/components/app/AppSections";
-import { StoreBadges } from "@/components/Ui";
+import { HeroStores } from "@/components/HeroStores";
 import { Faq } from "@/components/Faq";
 import { HowHonest, HowJourney, HowLadder, HowRitual } from "@/components/how/HowSections";
 import { Checkout } from "@/components/Checkout";
@@ -69,7 +69,7 @@ async function SubPageBody({ params }: Pick<PageProps<"/[lang]/[slug]">, "params
 
       {page === "app" && (
         <>
-          <PageHero copy={t.app.hero} image="A5" noHand alt={t.alt.heroApp} icons={["gift", "phone", "heart"]} extra={<StoreBadges className="phero__stores" />} />
+          <PageHero copy={t.app.hero} image="A5" noHand alt={t.alt.heroApp} icons={["gift", "phone", "heart"]} extra={<HeroStores />} />
           <AppTools />
           <AppSteps />
           <AppClosing />

@@ -3,6 +3,7 @@
 import { useId, useState, type ChangeEvent, type CSSProperties, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 import { CircleCheck, CreditCard, Lock, MapPin, PackageCheck, ShieldCheck, Smartphone, Tag, Truck, User, UserCheck } from "lucide-react";
 import {
   DEFAULT_DOSAGE,
@@ -24,6 +25,7 @@ import { href } from "@/lib/routes";
 import { BoxStack } from "./BoxMock";
 import { HelpCard } from "./Faq";
 import { Media } from "./Media";
+import { EASE, fadeUp, revealList } from "./Motion";
 import { useSite } from "./SiteContext";
 import { HandNote } from "./Ui";
 
@@ -250,7 +252,7 @@ export function Checkout() {
               <div className="checkout__side">
                 <aside className="summary" aria-labelledby="summary-title" style={{ "--c": selectedDosage.color } as CSSProperties}>
                   {/* Two halves so phones can show the order above the form and the totals below it. */}
-                  <div className="summary__order">
+                  <motion.div className="summary__order" {...revealList()} variants={fadeUp}>
                   <h2 id="summary-title" className="display summary__title">
                     <span className="summary__cart" aria-hidden="true">
                       <PackageCheck strokeWidth={1.6} />
@@ -318,9 +320,9 @@ export function Checkout() {
                       ))}
                     </div>
                   </fieldset>
-                  </div>
+                  </motion.div>
 
-                  <div className="summary__pay" data-title={c.summary.title}>
+                  <motion.div className="summary__pay" data-title={c.summary.title} {...revealList()} variants={fadeUp}>
                   <dl className="summary__totals">
                     <div>
                       <dt>{c.summary.subtotal}</dt>
@@ -364,7 +366,7 @@ export function Checkout() {
                   <p className="summary__terms">
                     {c.terms} <a href="#">{c.termsLink}</a> {c.and} <a href="#">{c.privacyLink}</a>.
                   </p>
-                  </div>
+                  </motion.div>
                 </aside>
 
                 <ul className="cocards">
@@ -397,7 +399,7 @@ export function Checkout() {
 function Panel({ icon, title, lead, children }: { icon: ReactNode; title: string; lead?: string; children: ReactNode }) {
   const id = useId();
   return (
-    <fieldset className="panel" aria-labelledby={id}>
+    <motion.fieldset className="panel" aria-labelledby={id} {...revealList()} variants={fadeUp}>
       <div className="panel__head">
         <span className="panel__icon" aria-hidden="true">
           {icon}
@@ -410,7 +412,7 @@ function Panel({ icon, title, lead, children }: { icon: ReactNode; title: string
         </div>
       </div>
       {children}
-    </fieldset>
+    </motion.fieldset>
   );
 }
 
@@ -542,7 +544,22 @@ function MethodOption({
           {logo}
         </span>
       </label>
-      {children}
+      {/* The card fields unfold under the chosen method and fold away when another is picked. */}
+      <AnimatePresence initial={false}>
+        {children && (
+          <motion.div
+            key="fields"
+            className="method__fields"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE }}
+            style={{ overflow: "hidden" }}
+          >
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -564,30 +581,38 @@ function Confirmation({ name, email, orderNo, onReset }: { name: string; email: 
   const { t, locale } = useSite();
   const d = t.checkout.done;
   return (
-    <div className="done" role="status">
-      <CircleCheck className="done__icon" aria-hidden="true" strokeWidth={1.4} />
-      <h2 className="display done__title">{fill(d.title, { name })}</h2>
-      <p className="done__lead">{fill(d.lead, { email })}</p>
-      <p className="done__order">
+    <motion.div className="done" role="status" initial="hidden" animate="show" variants={{ hidden: { opacity: 0, scale: 0.96 }, show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE, staggerChildren: 0.08, delayChildren: 0.1 } } }}>
+      <motion.span variants={{ hidden: { scale: 0, opacity: 0 }, show: { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 260, damping: 18 } } }}>
+        <CircleCheck className="done__icon" aria-hidden="true" strokeWidth={1.4} />
+      </motion.span>
+      <motion.h2 className="display done__title" variants={fadeUp}>
+        {fill(d.title, { name })}
+      </motion.h2>
+      <motion.p className="done__lead" variants={fadeUp}>
+        {fill(d.lead, { email })}
+      </motion.p>
+      <motion.p className="done__order" variants={fadeUp}>
         {d.order}: <b>{orderNo}</b>
-      </p>
-      <div className="done__next">
+      </motion.p>
+      <motion.div className="done__next" variants={fadeUp}>
         <h3>{d.next}</h3>
         <ol>
           {d.nextItems.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ol>
-      </div>
-      <div className="done__actions">
+      </motion.div>
+      <motion.div className="done__actions" variants={fadeUp}>
         <Link href={href(locale, "home")} className="btn btn--gold">
           {d.home}
         </Link>
         <button type="button" className="btn btn--gold-soft" onClick={onReset}>
           {d.again}
         </button>
-      </div>
-      <p className="done__demo">{d.demo}</p>
-    </div>
+      </motion.div>
+      <motion.p className="done__demo" variants={fadeUp}>
+        {d.demo}
+      </motion.p>
+    </motion.div>
   );
 }
