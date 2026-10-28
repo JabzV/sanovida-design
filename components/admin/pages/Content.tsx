@@ -2,17 +2,23 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ChevronRight, Eye, FileText, Globe, HelpCircle, History, ImageIcon, Link2, Monitor, Package, Search, Send, ShoppingBag, Smartphone, Trash2, Upload, X } from "lucide-react";
-import { href } from "@/lib/routes";
+import { ChevronDown, ChevronRight, Eye, FileText, Globe, HelpCircle, History, ImageIcon, Link2, Monitor, Package, Search, Send, ShoppingBag, Smartphone, Trash2, Upload, X } from "lucide-react";
+import { href, type PageKey } from "@/lib/routes";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import { useAdmin } from "../AdminContext";
 import { ScaledFrame } from "../ScaledFrame";
 import { contentEditors } from "@/lib/admin/i18n-pages";
-import { CONTENT_KEYS, ContentEditor } from "./ContentEditors";
+import { CONTENT_KEYS, ContentEditor, type ContentKey } from "./ContentEditors";
 import { Badge, Btn, Card, CardHead, Field, Flag, Input, Page, PageHead, Select, Toggle, grid, row, type IconType, type Tone, EASE_OUT } from "../Ui";
 
 const SECTION_ICONS: IconType[] = [ImageIcon, ShoppingBag, Package, Smartphone, HelpCircle, FileText, Search, Globe];
 const SECTION_TONES: Tone[] = ["rose", "gold", "rose", "leaf", "rose", "gold", "leaf", "gold"];
 const M_TONES: Tone[] = ["leaf", "gold", "rose", "blue", "gold", "violet", "rose", "leaf"];
+/** Site pages offered by the preview picker, in site-nav order. */
+const SITE_PAGES: PageKey[] = ["home", "product", "packages", "app", "how", "faq", "checkout"];
+
+/* How the preview frame scrolls to each section: the top, the bottom, or a selector. */
+const PREVIEW_TARGETS: Record<ContentKey, string> = { banner: "top", product: "#hprod-title", packages: "#hpack-title", app: "#happ-title", faq: "top", footer: "bottom", seo: "top", i18n: "top" };
 
 export function Content() {
   const { locale, t } = useAdmin();
@@ -21,11 +27,24 @@ export function Content() {
   const [lang, setLang] = useState<"es" | "en">(locale);
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
   const [mDevice, setMDevice] = useState<"desktop" | "mobile">("mobile");
+  // The picker overrides which site page is previewed until the next section click.
+  const [pagePick, setPagePick] = useState<PageKey | null>(null);
+  const [pickedFor, setPickedFor] = useState(section);
+  if (pagePick !== null && pickedFor !== section) {
+    setPagePick(null);
+    setPickedFor(section);
+  }
   const editor = t.content.editor;
   const key = CONTENT_KEYS[section];
   const ce = contentEditors[locale];
   const head = key === "banner" ? { title: editor.title, sub: editor.sub, mSub: editor.mSub } : { title: ce[key].title, sub: ce[key].sub, mSub: ce[key].sub };
   const SectionIcon = SECTION_ICONS[section];
+  // The live preview follows the section being edited.
+  // A fixed fragment keeps the site from scrolling itself to the top on load; the frame does the scrolling.
+  const sectionPage: PageKey = key === "faq" ? "faq" : "home";
+  const previewPage = pagePick ?? sectionPage;
+  const previewSrc = href(lang, previewPage, "preview");
+  const previewTarget = previewPage === sectionPage ? PREVIEW_TARGETS[key] : "top";
 
   return (
     <Page className="ad-content">
@@ -137,6 +156,7 @@ export function Content() {
         {/* Preview */}
         <Card className="ad-preview">
           <CardHead title={<><Eye aria-hidden="true" strokeWidth={1.8} className="ad-m is-leaf" /> <span className="ad-d">{c.preview}</span><span className="ad-m">{c.mPreview}</span></>}>
+            <PagePicker lang={lang} value={previewPage} onChange={(p) => { setPickedFor(section); setPagePick(p); }} />
             <DeviceSwitch id="d" value={device} onChange={setDevice} labels={[c.desktop, c.mobile]} className="ad-d" />
             <DeviceSwitch id="m" value={mDevice} onChange={setMDevice} labels={[c.desktop, c.mobile]} className="ad-m" />
           </CardHead>
@@ -146,14 +166,50 @@ export function Content() {
               <i />
               <i />
             </span>
-            {device === "desktop" ? <ScaledFrame src={href(lang, "home")} title={c.preview} width={1440} height={1600} /> : <ScaledFrame src={href(lang, "home")} title={c.preview} width={400} height={720} />}
+            {device === "desktop" ? <ScaledFrame src={previewSrc} target={previewTarget} title={c.preview} width={1440} height={1600} /> : <ScaledFrame src={previewSrc} target={previewTarget} title={c.preview} width={400} height={720} />}
           </div>
           <div className={`ad-preview__frame ad-m is-${mDevice}`}>
-            {mDevice === "desktop" ? <ScaledFrame src={href(lang, "home")} title={c.mPreview} width={1440} height={900} /> : <ScaledFrame src={href(lang, "home")} title={c.mPreview} width={400} height={330} />}
+            {mDevice === "desktop" ? <ScaledFrame src={previewSrc} target={previewTarget} title={c.mPreview} width={1440} height={900} /> : <ScaledFrame src={previewSrc} target={previewTarget} title={c.mPreview} width={400} height={330} />}
           </div>
         </Card>
       </div>
     </Page>
+  );
+}
+
+/** Chooses which page of the site the preview shows, with its route. */
+function PagePicker({ lang, value, onChange }: { lang: Locale; value: PageKey; onChange: (p: PageKey) => void }) {
+  const [open, setOpen] = useState(false);
+  const nav = getDictionary(lang).nav;
+  const name = (p: PageKey) => (p === "checkout" ? "Checkout" : nav[p]);
+  return (
+    <div
+      className="ad-pagepick"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false);
+      }}
+    >
+      <button type="button" className="ad-select__btn ad-pagepick__btn" aria-haspopup="listbox" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
+        <span className="ad-select__value">
+          {name(value)} <code>{href(lang, value)}</code>
+        </span>
+        <ChevronDown aria-hidden="true" strokeWidth={2} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.ul className="ad-menu ad-pagepick__menu" role="listbox" initial={{ opacity: 0, y: -6, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -6, scale: 0.98 }} transition={{ duration: 0.22, ease: EASE_OUT }}>
+            {SITE_PAGES.map((p) => (
+              <li key={p} role="option" aria-selected={p === value}>
+                <button type="button" className={p === value ? "is-active" : ""} onClick={() => { onChange(p); setOpen(false); }}>
+                  <span>{name(p)}</span>
+                  <code>{href(lang, p)}</code>
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 

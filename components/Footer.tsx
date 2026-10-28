@@ -11,7 +11,7 @@ export function Footer() {
   const f = t.footer;
 
   return (
-    <footer className="footer">
+    <footer className="footer" id="footer">
       <div className="wrap footer__inner">
         <div className="footer__brand">
           <Logo variant="dark" />
