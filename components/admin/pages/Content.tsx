@@ -17,6 +17,9 @@ const M_TONES: Tone[] = ["leaf", "gold", "rose", "blue", "gold", "violet", "rose
 /** Site pages offered by the preview picker, in site-nav order. */
 const SITE_PAGES: PageKey[] = ["home", "product", "packages", "app", "how", "faq", "checkout"];
 
+/** The content section that edits each site page; pages without one keep the current section. */
+const PAGE_SECTION: Partial<Record<PageKey, ContentKey>> = { home: "banner", product: "product", packages: "packages", app: "app", faq: "faq" };
+
 /* How the preview frame scrolls to each section: the top, the bottom, or a selector. */
 const PREVIEW_TARGETS: Record<ContentKey, string> = { banner: "top", product: "#hprod-title", packages: "#hpack-title", app: "#happ-title", faq: "top", footer: "bottom", seo: "top", i18n: "top" };
 
@@ -44,6 +47,13 @@ export function Content() {
   const sectionPage: PageKey = key === "faq" ? "faq" : "home";
   const previewPage = pagePick ?? sectionPage;
   const previewSrc = href(lang, previewPage, "preview");
+  // Picking a page also opens the section that edits it, when there is one.
+  const pickPage = (p: PageKey) => {
+    const s = CONTENT_KEYS.indexOf(PAGE_SECTION[p] ?? key);
+    setSection(s);
+    setPickedFor(s);
+    setPagePick(p);
+  };
   const previewTarget = previewPage === sectionPage ? PREVIEW_TARGETS[key] : "top";
 
   return (
@@ -156,7 +166,7 @@ export function Content() {
         {/* Preview */}
         <Card className="ad-preview">
           <CardHead title={<><Eye aria-hidden="true" strokeWidth={1.8} className="ad-m is-leaf" /> <span className="ad-d">{c.preview}</span><span className="ad-m">{c.mPreview}</span></>}>
-            <PagePicker lang={lang} value={previewPage} onChange={(p) => { setPickedFor(section); setPagePick(p); }} />
+            <PagePicker lang={lang} value={previewPage} onChange={pickPage} />
             <DeviceSwitch id="d" value={device} onChange={setDevice} labels={[c.desktop, c.mobile]} className="ad-d" />
             <DeviceSwitch id="m" value={mDevice} onChange={setMDevice} labels={[c.desktop, c.mobile]} className="ad-m" />
           </CardHead>
